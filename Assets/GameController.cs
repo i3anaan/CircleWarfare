@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour {
 				Creep newCreep = (Creep) GameObject.Instantiate (creepPrefab, new Vector3 (), Quaternion.identity);
 				newCreep.gameObject.GetComponent<SpriteRenderer>().color = color;
 				newCreep.team = t;
+				newCreep.color = color;
 				newCreep.speed = Random.Range (0.5f, 1.5f) * Creep.BASE_SPEED;
 				newCreep.damage = Random.Range (0.5f, 1.5f) * Creep.BASE_DAMAGE;
 				newCreep.life = Random.Range(0.5f, 1.5f) * Creep.BASE_LIFE;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Creep : MonoBehaviour {
 
-	public static float BASE_SPEED = 0.03f;
+	public static float BASE_SPEED = 3f;
 	public static float BASE_DAMAGE = 1f;
 	public static float BASE_LIFE = 100f;
 
@@ -14,12 +14,17 @@ public class Creep : MonoBehaviour {
 	public float speed;
 	public float damage;
 	public float life;
-	private float[] priority = new float[]{1f, 1f, 1f, 3f};
+	public Explosion explosionPrefab;
+	public Color color;
+	private float[] priority = new float[]{1f, 1f, 1f, 1f};
 
 	// Use this for initialization
 	void Start () {
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController>();
 		creeps = gc.creeps;
+		for (int i = 0; i < priority.Length; i++) {
+			priority [i] = Random.Range (1f, 3f);
+		}
 		ReScale ();
 	}
 	
@@ -27,11 +32,13 @@ public class Creep : MonoBehaviour {
 	void FixedUpdate () {
 		Creep target = FindTarget ();
 
-		//Vector3 dir = (target.transform.position - this.transform.position).normalized;
+		Vector3 dir = (target.transform.position - this.transform.position).normalized;
+		float mass = this.GetComponent<Rigidbody2D> ().mass;
+		this.GetComponents<Rigidbody2D> () [0].AddForce (dir * speed * mass);
 
-		this.transform.position = Vector3.MoveTowards (this.transform.position, target.transform.position, speed);
+		//this.transform.position = Vector3.MoveTowards (this.transform.position, target.transform.position, speed);
 
-		if (Vector3.Distance (this.transform.position, target.transform.position) < (this.transform.localScale.x + target.transform.localScale.x) * 0.6f) {
+		if (Vector2.Distance (this.transform.position, target.transform.position) < (this.transform.localScale.x + target.transform.localScale.x) * 0.51f) {
 			//Fighting the target;
 			this.Attack (target);
 		}
@@ -42,8 +49,31 @@ public class Creep : MonoBehaviour {
 		ReScale ();
 
 		if (this.life < 0) {
-			GameObject.Destroy (this.gameObject);
+			Die ();
 		}
+	}
+
+	void Die() {
+		//Explode
+		/*
+		float explDist = 3f;
+		float explForce = 100f;
+
+		foreach (Creep c in creeps) {
+			if (c) {
+				float dist = Vector2.Distance(this.transform.position, c.transform.position);
+				dist = dist - c.transform.localScale.x;
+				if (dist < explDist) {
+					Vector3 dir = (c.transform.position - this.transform.position).normalized;
+					Vector3 force = dir * (dist / explDist) * explForce;
+					c.GetComponent<Rigidbody2D>().AddForce(force);
+				}
+			}
+		}
+		*/
+		Explosion exp = (Explosion) GameObject.Instantiate (explosionPrefab, this.transform.position, this.transform.rotation);
+		exp.color = this.color;
+		GameObject.Destroy (this.gameObject);
 	}
 
 	void Attack(Creep target) {
@@ -51,8 +81,9 @@ public class Creep : MonoBehaviour {
 	}
 
 	void ReScale() {
-		float scale = this.life / BASE_LIFE;
+		float scale = Mathf.Max(this.life / BASE_LIFE, 0.15f);
 		this.transform.localScale = new Vector3 (scale, scale, scale);
+		this.GetComponent<Rigidbody2D> ().mass = 0.5f + scale / 2f;
 	}
 
 	Creep FindTarget() {
@@ -61,7 +92,7 @@ public class Creep : MonoBehaviour {
 
 		foreach (Creep c in creeps) {
 			if (c && c.team != this.team) {
-				float dist = Vector3.Distance(this.transform.position, c.gameObject.transform.position);
+				float dist = Vector2.Distance(this.transform.position, c.gameObject.transform.position);
 				if (dist / priority[c.team] < minDistance) {
 					minDistance = dist / priority[c.team];
 					target = c;
