@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameController : MonoBehaviour {
+
+public class GameController : NetworkBehaviour {
 
 	public Creep creepPrefab;
 	public int teamCount;
@@ -13,7 +15,10 @@ public class GameController : MonoBehaviour {
 
 	private Color[] colors = new Color[]{Color.red, Color.blue, Color.green, Color.yellow};
 
+
 	void Awake() {
+		NetworkServer.Spawn (this.gameObject);
+
 		for (int t = 0; t < teamCount; t++) {
 			Color color = colors [t];
 			for (int c = 0; c < creepCountPerTeam; c++) {
@@ -35,6 +40,7 @@ public class GameController : MonoBehaviour {
 	void SpawnCreeps() {
 		foreach (Creep creep in creeps) {
 			creep.transform.position = new Vector3(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange), 0);
+			NetworkServer.Spawn (creep.gameObject);
 		}
 	}
 

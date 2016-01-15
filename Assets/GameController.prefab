@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 449818}
   - 114: {fileID: 11492738}
+  - 114: {fileID: 11493376}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -43,8 +44,40 @@ MonoBehaviour:
   teamCount: 4
   creepCountPerTeam: 10
   creeps: []
-  xRange: 5
-  yRange: 5
+  xRange: 8.38888931
+  yRange: 4.5
+--- !u!114 &11493376
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 162
+    i1: 113
+    i2: 221
+    i3: 246
+    i4: 174
+    i5: 43
+    i6: 196
+    i7: 244
+    i8: 233
+    i9: 74
+    i10: 187
+    i11: 80
+    i12: 30
+    i13: 198
+    i14: 66
+    i15: 30
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
