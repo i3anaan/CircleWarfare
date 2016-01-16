@@ -33,15 +33,17 @@ public class Creep : NetworkBehaviour {
 	void FixedUpdate () {
 		Creep target = FindTarget ();
 
-		Vector3 dir = (target.transform.position - this.transform.position).normalized;
-		float mass = this.GetComponent<Rigidbody2D> ().mass;
-		this.GetComponents<Rigidbody2D> () [0].AddForce (dir * speed * mass);
+		if (target) {
+			Vector3 dir = (target.transform.position - this.transform.position).normalized;
+			float mass = this.GetComponent<Rigidbody2D> ().mass;
+			this.GetComponents<Rigidbody2D> () [0].AddForce (dir * speed * mass);
 
-		//this.transform.position = Vector3.MoveTowards (this.transform.position, target.transform.position, speed);
+			//this.transform.position = Vector3.MoveTowards (this.transform.position, target.transform.position, speed);
 
-		if (Vector2.Distance (this.transform.position, target.transform.position) < (this.transform.localScale.x + target.transform.localScale.x) * 0.51f) {
-			//Fighting the target;
-			this.Attack (target);
+			if (Vector2.Distance (this.transform.position, target.transform.position) < (this.transform.localScale.x + target.transform.localScale.x) * 0.51f) {
+				//Fighting the target;
+				this.Attack (target);
+			}
 		}
 	}
 

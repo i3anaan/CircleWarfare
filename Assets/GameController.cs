@@ -13,16 +13,25 @@ public class GameController : NetworkBehaviour {
 	public float xRange;
 	public float yRange;
 
+	private bool started;
+
 	private Color[] colors = new Color[]{Color.red, Color.blue, Color.green, Color.yellow};
 
-
-	void Awake() {
+	void Start() {
 		NetworkServer.Spawn (this.gameObject);
+	}
+
+
+	[Server]
+	void StartGame() {
+		started = true;
+		Debug.Log ("GameController.Awake();");
 
 		for (int t = 0; t < teamCount; t++) {
 			Color color = colors [t];
 			for (int c = 0; c < creepCountPerTeam; c++) {
 				Creep newCreep = (Creep) GameObject.Instantiate (creepPrefab, new Vector3 (), Quaternion.identity);
+				NetworkServer.Spawn (newCreep.gameObject);
 				newCreep.gameObject.GetComponent<SpriteRenderer>().color = color;
 				newCreep.team = t;
 				newCreep.color = color;
@@ -36,11 +45,17 @@ public class GameController : NetworkBehaviour {
 		SpawnCreeps ();
 	}
 
+	[Server]
+	void Update() {
+		if (!started && Input.GetKeyDown(KeyCode.Space)) {
+			StartGame ();
+		}
+	}
+
 
 	void SpawnCreeps() {
 		foreach (Creep creep in creeps) {
 			creep.transform.position = new Vector3(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange), 0);
-			NetworkServer.Spawn (creep.gameObject);
 		}
 	}
 

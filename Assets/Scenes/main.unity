@@ -104,7 +104,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 447528, guid: c98ca754e624f4d7fb72f9167ca25b0f, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 447528, guid: c98ca754e624f4d7fb72f9167ca25b0f, type: 2}
       propertyPath: m_LocalRotation.x
@@ -242,10 +242,13 @@ MonoBehaviour:
   m_PlayerPrefab: {fileID: 0}
   m_AutoCreatePlayer: 0
   m_PlayerSpawnMethod: 0
-  m_OfflineScene: main
-  m_OnlineScene: main
+  m_OfflineScene: 
+  m_OnlineScene: 
   m_SpawnPrefabs:
   - {fileID: 124098, guid: 5f0165179837948c9a6760aab9bd7391, type: 2}
+  - {fileID: 123582, guid: 48f9a724419c64e3e9353b96e1ef9a52, type: 2}
+  - {fileID: 120682, guid: ac901d46b44ce422eb4b7842e04f0da8, type: 2}
+  - {fileID: 138416, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -329,7 +332,7 @@ Prefab:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11493376, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
-      propertyPath: m_ServerOnly
+      propertyPath: m_LocalPlayerAuthority
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
