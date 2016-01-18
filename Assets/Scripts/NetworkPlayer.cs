@@ -4,7 +4,6 @@ using System.Collections;
 
 public class NetworkPlayer : NetworkBehaviour {
 
-	[SyncVar]
 	public TeamPriorities priorities;
 
 	[Command]
