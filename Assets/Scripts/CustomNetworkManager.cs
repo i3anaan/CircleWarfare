@@ -43,6 +43,14 @@ public abstract class CustomNetworkManager : MonoBehaviour {
 		Debug.Log ("Set up server at port: " + socketId + " With a maximum of " + maxConnections + " Connections");
 	}
 
+	public virtual void SendData(byte[] data, int datasize) {
+		byte error;
+		NetworkTransport.Send (socketId, connectionId, reliableChannelId, data, datasize, out error);
+		if (((NetworkError)error) != NetworkError.Ok) {
+			Debug.Log ("Send error: " + ((NetworkError)error));
+		}
+	}
+
 	void Update() {
 		int recHostId; 
 		int connectionId; 
@@ -73,20 +81,18 @@ public abstract class CustomNetworkManager : MonoBehaviour {
 	}
 
 	public virtual void RcvNothing(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
-		//Debug.Log ("NetworkEventType.Nothing");
+		Debug.Log ("NetworkEventType.Nothing");
 	}
 
 	public virtual void RcvConnect(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
-		//Debug.Log ("NetworkEventType.ConnectEvent");
+		Debug.Log ("NetworkEventType.ConnectEvent");
 	}
 
 	public virtual void RcvData(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
-		//Debug.Log ("NetworkEventType.DataEvent");
+		Debug.Log ("NetworkEventType.DataEvent");
 	}
 
 	public virtual void RcvDisconnect(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
-		//Debug.Log ("NetworkEventType.DisconnectEvent");
+		Debug.Log ("NetworkEventType.DisconnectEvent");
 	}
-		
-		
 }
