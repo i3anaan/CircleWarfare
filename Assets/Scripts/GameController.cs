@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 
-public class GameController : NetworkBehaviour {
+public class GameController : MonoBehaviour {
 
 	public Creep creepPrefab;
 	public int teamCount;
@@ -17,12 +17,6 @@ public class GameController : NetworkBehaviour {
 
 	private Color[] colors = new Color[]{Color.red, Color.blue, Color.green, Color.yellow};
 
-	void Start() {
-		NetworkServer.Spawn (this.gameObject);
-	}
-
-
-	[Server]
 	void StartGame() {
 		started = true;
 		Debug.Log ("GameController.Awake();");
@@ -31,7 +25,6 @@ public class GameController : NetworkBehaviour {
 			Color color = colors [t];
 			for (int c = 0; c < creepCountPerTeam; c++) {
 				Creep newCreep = (Creep) GameObject.Instantiate (creepPrefab, new Vector3 (), Quaternion.identity);
-				NetworkServer.Spawn (newCreep.gameObject);
 				newCreep.gameObject.GetComponent<SpriteRenderer>().color = color;
 				newCreep.team = t;
 				newCreep.color = color;
@@ -45,7 +38,6 @@ public class GameController : NetworkBehaviour {
 		SpawnCreeps ();
 	}
 
-	[Server]
 	void Update() {
 		if (!started && Input.GetKeyDown(KeyCode.Space)) {
 			StartGame ();
@@ -60,6 +52,6 @@ public class GameController : NetworkBehaviour {
 	}
 
 	public void GameOver() {
-		Application.LoadLevel ("main");
+		SceneManager.LoadScene ("Server");
 	}
 }

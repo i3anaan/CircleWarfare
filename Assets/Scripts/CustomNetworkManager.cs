@@ -51,6 +51,11 @@ public abstract class CustomNetworkManager : MonoBehaviour {
 		}
 	}
 
+	void OnDisable() {
+		//TODO move this to a different method?
+		NetworkTransport.RemoveHost (socketId);
+	}
+
 	void Update() {
 		int recHostId; 
 		int connectionId; 

@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Creep : NetworkBehaviour {
+public class Creep : MonoBehaviour {
 
 	public static float BASE_SPEED = 3f;
 	public static float BASE_DAMAGE = 1f;
@@ -37,8 +36,6 @@ public class Creep : NetworkBehaviour {
 			Vector3 dir = (target.transform.position - this.transform.position).normalized;
 			float mass = this.GetComponent<Rigidbody2D> ().mass;
 			this.GetComponents<Rigidbody2D> () [0].AddForce (dir * speed * mass);
-
-			//this.transform.position = Vector3.MoveTowards (this.transform.position, target.transform.position, speed);
 
 			if (Vector2.Distance (this.transform.position, target.transform.position) < (this.transform.localScale.x + target.transform.localScale.x) * 0.51f) {
 				//Fighting the target;
