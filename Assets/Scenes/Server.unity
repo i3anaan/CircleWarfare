@@ -107,6 +107,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c98ca754e624f4d7fb72f9167ca25b0f, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &945806817 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11492738, guid: a271ddf6ae2bc4f4e94abb501ec6421e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1211060333}
+  m_Script: {fileID: 11500000, guid: f0c597becb7314453b6d7a7325a3f3d6, type: 3}
 --- !u!1001 &1211060333
 Prefab:
   m_ObjectHideFlags: 0
@@ -145,6 +151,22 @@ Prefab:
     - target: {fileID: 449818, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11492738, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
+      propertyPath: speedRandomness
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11492738, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
+      propertyPath: damageRandomness
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11492738, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
+      propertyPath: lifeRandomness
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11492738, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
+      propertyPath: creepCountPerTeam
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
@@ -206,6 +228,7 @@ MonoBehaviour:
     m_MessagePoolSizeGrowthFactor: 0.75
   socketId: 0
   connectionId: 0
+  gc: {fileID: 945806817}
 --- !u!4 &1832636712
 Transform:
   m_ObjectHideFlags: 0

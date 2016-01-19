@@ -40,7 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debrisPrefab: {fileID: 120682, guid: ac901d46b44ce422eb4b7842e04f0da8, type: 2}
-  debrisCount: 60
+  debrisCount: 50
   force: 15
   color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &100100000
@@ -60,7 +60,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: debrisCount
-      value: 60
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled

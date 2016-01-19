@@ -4,10 +4,6 @@ using System.Collections.Generic;
 
 public class Creep : MonoBehaviour {
 
-	public static float BASE_SPEED = 3f;
-	public static float BASE_DAMAGE = 1f;
-	public static float BASE_LIFE = 100f;
-
 	private GameController gc;
 	private List<Creep> creeps;
 	public int team;
@@ -81,7 +77,7 @@ public class Creep : MonoBehaviour {
 	}
 
 	void ReScale() {
-		float scale = Mathf.Max(this.life / BASE_LIFE, 0.15f);
+		float scale = Mathf.Max(this.life / GameController.CREEP_BASE_LIFE, 0.15f);
 		this.transform.localScale = new Vector3 (scale, scale, scale);
 		this.GetComponent<Rigidbody2D> ().mass = 0.5f + scale / 2f;
 	}
