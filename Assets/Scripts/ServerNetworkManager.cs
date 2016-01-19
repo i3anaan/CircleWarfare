@@ -7,7 +7,7 @@ public class ServerNetworkManager : MonoBehaviour {
 	private int reliableChannelId;
 	private int unreliableChannelId;
 	HostTopology topology;
-	int hostId;
+	int socketId;
 
 	// Use this for initialization
 	void Start () {
@@ -19,7 +19,7 @@ public class ServerNetworkManager : MonoBehaviour {
 
 		topology = new HostTopology(config, 4);
 
-		hostId = NetworkTransport.AddHost(topology, 7777);
+		socketId = NetworkTransport.AddHost(topology, 7522);
 	}
 	
 	void Update() {
@@ -31,6 +31,8 @@ public class ServerNetworkManager : MonoBehaviour {
 		int dataSize;
 		byte error;
 		NetworkEventType recData = NetworkTransport.Receive(out recHostId, out connectionId, out channelId, recBuffer, bufferSize, out dataSize, out error);
+		Debug.Log ("Error: " + ((NetworkError) error));
+
 		switch (recData)
 		{
 		case NetworkEventType.Nothing:         //1
