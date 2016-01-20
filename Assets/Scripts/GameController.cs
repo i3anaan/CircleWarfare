@@ -26,24 +26,27 @@ public class GameController : MonoBehaviour {
 	private Color[] colors = new Color[]{Color.red, Color.blue, Color.green, Color.yellow};
 
 	public void StartGame() {
-		started = true;
-		Debug.Log ("GameController.Awake();");
+		if (!started) {
+			started = true;
 
-		for (int t = 0; t < teamCount; t++) {
-			Color color = colors [t];
-			for (int c = 0; c < creepCountPerTeam; c++) {
-				Creep newCreep = (Creep) GameObject.Instantiate (creepPrefab, new Vector3 (), Quaternion.identity);
-				newCreep.gameObject.GetComponent<SpriteRenderer>().color = color;
-				newCreep.team = t;
-				newCreep.color = color;
-				newCreep.speed = Random.Range (1f - speedRandomness, 1f + speedRandomness) * CREEP_BASE_SPEED;
-				newCreep.damage = Random.Range (1f - damageRandomness, 1f + damageRandomness) * CREEP_BASE_DAMAGE;
-				newCreep.life = Random.Range(1f - lifeRandomness, 1f + lifeRandomness) * CREEP_BASE_LIFE;
-				creeps.Add (newCreep);
+			for (int t = 0; t < teamCount; t++) {
+				Color color = colors [t];
+				for (int c = 0; c < creepCountPerTeam; c++) {
+					Creep newCreep = (Creep)GameObject.Instantiate (creepPrefab, new Vector3 (), Quaternion.identity);
+					newCreep.gameObject.GetComponent<SpriteRenderer> ().color = color;
+					newCreep.team = t;
+					newCreep.color = color;
+					newCreep.speed = Random.Range (1f - speedRandomness, 1f + speedRandomness) * CREEP_BASE_SPEED;
+					newCreep.damage = Random.Range (1f - damageRandomness, 1f + damageRandomness) * CREEP_BASE_DAMAGE;
+					newCreep.life = Random.Range (1f - lifeRandomness, 1f + lifeRandomness) * CREEP_BASE_LIFE;
+					creeps.Add (newCreep);
+				}
 			}
-		}
 
-		SpawnCreeps ();
+			SpawnCreeps ();
+		} else {
+			Debug.LogError ("Trying to start an already started game!");
+		}
 	}
 
 	void SpawnCreeps() {

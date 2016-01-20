@@ -7,10 +7,14 @@ public class ServerNetworkManager : CustomNetworkManager {
 	public GameController gc;
 
 	void Start () {
-		SetupAsServer (7522, 4);
+		//SetupAsServer (7522, 4);
 	}
 
 	public override void RcvConnect(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
+		gc.StartGame ();
+	}
+
+	public override void RcvData(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
 		gc.StartGame ();
 	}
 }
