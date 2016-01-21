@@ -20,9 +20,10 @@ public class SetupClientGameController : BaseClientGameController {
 		}
 		connectedStatus.text = CheckConnection() ? "Connected!" : "Disconnected.";
 		ReadyButton.gameObject.SetActive (CheckConnection ());
+		isReady = CheckConnection() ? isReady : false;
 	}
 
-	public override void RcvConnect(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
+	public override void RcvConnect(int rcvHostId, int connectionId, int channelId) {
 		address.text = "[0.0.0.0]:" + networkManager.localPort;
 
 		SendName ();

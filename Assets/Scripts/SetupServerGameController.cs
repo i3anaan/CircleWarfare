@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 public class SetupServerGameController : BaseServerGameController {
 
@@ -17,13 +18,23 @@ public class SetupServerGameController : BaseServerGameController {
 		playersConnected = 0;
 	}
 
-	void Update() {
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			SceneManager.LoadScene ("S_simulation");
+	void CheckAllReady() {
+		bool allReady = true;
+		foreach (int i in networkManager.connectionIds) {
+			allReady = allReady && networkManager.GetClientData (i).ready;
+		}
+
+		if (allReady) {
+			OnAllReady ();
 		}
 	}
 
-	public override void RcvConnect(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
+	void OnAllReady() {
+		//TODO Send ready signal to clients.
+		SceneManager.LoadScene ("S_simulation");
+	}
+
+	public override void RcvConnect(int rcvHostId, int connectionId, int channelId) {
 		playersConnected++;
 		textField.text = playersConnected + "";
 
@@ -31,19 +42,19 @@ public class SetupServerGameController : BaseServerGameController {
 		networkManager.AddClientData (client);
 	}
 
-	public override void RcvDisconnect(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
+	public override void RcvDisconnect(int rcvHostId, int connectionId, int channelId) {
 		playersConnected--;
 		textField.text = playersConnected + "";
 
 		networkManager.RemoveClientData (connectionId);
 	}
 
-
 	public override void RcvData(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
 		switch (rcvBuffer[0]) {
 		case MESSAGE_CLIENT_READY:
 			GetClient (connectionId).ready = true;
 			Debug.Log (GetClient (connectionId) + " is Ready!");
+			CheckAllReady ();
 			break;
 		case MESSAGE_CLIENT_NOT_READY:
 			GetClient (connectionId).ready = false;
@@ -57,5 +68,18 @@ public class SetupServerGameController : BaseServerGameController {
 			//Do nothing?
 			break;
 		}			
+	}
+
+	public override void RcvError(byte error, int rcvHostId, int connectionId, int channelId) {
+		base.RcvError (error, rcvHostId, connectionId, channelId);
+		switch ((NetworkError)error) {
+		case NetworkError.Timeout:
+			Debug.Log ("Timeout for: " + GetClient (connectionId));
+			RcvDisconnect (rcvHostId, connectionId, channelId);
+			break;
+		default:
+			//TODO Do nothing?
+			break;
+		}
 	}
 }

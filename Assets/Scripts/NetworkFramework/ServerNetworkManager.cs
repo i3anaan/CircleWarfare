@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class ServerNetworkManager : SimpleServerNetworkManager {
 
+	public List<int> connectionIds;
 	private Dictionary<int, ClientData> clients = new Dictionary<int, ClientData>();
 
 	new void Awake() {
@@ -22,6 +23,7 @@ public class ServerNetworkManager : SimpleServerNetworkManager {
 
 	public void AddClientData(ClientData client) {
 		clients.Add (client.connectionId, client);
+		connectionIds.Add (client.connectionId);
 	}
 
 	public ClientData GetClientData(int connectionId) {

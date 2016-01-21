@@ -37,36 +37,34 @@ public abstract class BaseNetworkManager : MonoBehaviour, INetworkCallback{
 		byte error;
 		NetworkEventType recData = NetworkTransport.Receive(out recHostId, out connectionId, out channelId, recBuffer, bufferSize, out dataSize, out error);
 		if (((NetworkError)error) != NetworkError.Ok) {
-			Debug.Log ("Receive error: " + ((NetworkError)error));
-			Debug.Log ("ConnectionId: " + connectionId);
-			Debug.Log ("RcvHostId: " + recHostId);
+			RcvError (error, recHostId, connectionId, channelId);
 		} else {
 			switch (recData) {
 			case NetworkEventType.Nothing:
-				RcvNothing(recHostId, connectionId, channelId, recBuffer, dataSize);
+				RcvNothing(recHostId);
 				break;
 			case NetworkEventType.ConnectEvent:
-				RcvConnect(recHostId, connectionId, channelId, recBuffer, dataSize);
+				RcvConnect(recHostId, connectionId, channelId);
 				break;
 			case NetworkEventType.DataEvent:
 				RcvData(recHostId, connectionId, channelId, recBuffer, dataSize);
 				break;
 			case NetworkEventType.DisconnectEvent:
-				RcvDisconnect(recHostId, connectionId, channelId, recBuffer, dataSize);
+				RcvDisconnect(recHostId, connectionId, channelId);
 				break;
 			}
 		}
 	}
 
-	public virtual void RcvNothing(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
+	public virtual void RcvNothing(int rcvHostId) {
 		if (networkCallback != null) {
-			networkCallback.RcvNothing (rcvHostId, connectionId, channelId, rcvBuffer, datasize);
+			networkCallback.RcvNothing (rcvHostId);
 		}
 	}
 
-	public virtual void RcvConnect(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
+	public virtual void RcvConnect(int rcvHostId, int connectionId, int channelId) {
 		if (networkCallback != null) {
-			networkCallback.RcvConnect (rcvHostId, connectionId, channelId, rcvBuffer, datasize);
+			networkCallback.RcvConnect (rcvHostId, connectionId, channelId);
 		}
 	}
 
@@ -76,11 +74,18 @@ public abstract class BaseNetworkManager : MonoBehaviour, INetworkCallback{
 		}
 	}
 
-	public virtual void RcvDisconnect(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
+	public virtual void RcvDisconnect(int rcvHostId, int connectionId, int channelId) {
 		if (networkCallback != null) {
-			networkCallback.RcvDisconnect (rcvHostId, connectionId, channelId, rcvBuffer, datasize);
+			networkCallback.RcvDisconnect (rcvHostId, connectionId, channelId);
 		}
 	}
+
+	public virtual void RcvError(byte error, int rcvHostId, int connectionId, int channelId) {
+		if (networkCallback != null) {
+			networkCallback.RcvError (error, rcvHostId, connectionId, channelId);
+		}
+	}
+		
 
 
 
