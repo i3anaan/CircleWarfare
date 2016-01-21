@@ -659,6 +659,48 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!1 &1374282782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1374282784}
+  - 114: {fileID: 1374282783}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1374282783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1374282782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd31dceda9bd47e5a3df3364d2db421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkManager: {fileID: 0}
+  connectedStatus: {fileID: 1182231514}
+  address: {fileID: 246623233}
+--- !u!4 &1374282784
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1374282782}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 293, y: 165, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
 --- !u!1 &1531763861
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,7 +784,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Connect()
+          m_StringArgument: Connect
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -937,7 +979,7 @@ GameObject:
   - 114: {fileID: 2082961391}
   m_Layer: 0
   m_Name: ClientNetworkManager
-  m_TagString: Untagged
+  m_TagString: NetworkManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -993,13 +1035,9 @@ MonoBehaviour:
     m_ReceivedMessagePoolSize: 128
     m_SentMessagePoolSize: 128
     m_MessagePoolSizeGrowthFactor: 0.75
-  socketId: 0
+  localSocketId: 0
   localPort: 0
   connectionId: 0
-  connections: 0
-  isServer: 0
-  connectedStatus: {fileID: 1182231514}
-  address: {fileID: 246623233}
 --- !u!1 &2093487939
 GameObject:
   m_ObjectHideFlags: 0

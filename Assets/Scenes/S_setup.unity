@@ -85,31 +85,31 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &835521746
+--- !u!1 &785375106
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 835521748}
-  - 114: {fileID: 835521747}
+  - 4: {fileID: 785375108}
+  - 114: {fileID: 785375107}
   m_Layer: 0
-  m_Name: ServerSetupManager
-  m_TagString: Untagged
+  m_Name: ServerNetworkManager
+  m_TagString: NetworkManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &835521747
+--- !u!114 &785375107
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 835521746}
+  m_GameObject: {fileID: 785375106}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 313e3f837c6674d91ba364e337a8b238, type: 3}
+  m_Script: {fileID: 11500000, guid: 1163dfec71d124167993a96a9105885f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   reliableChannelId: 0
@@ -140,8 +140,45 @@ MonoBehaviour:
     m_ReceivedMessagePoolSize: 128
     m_SentMessagePoolSize: 128
     m_MessagePoolSizeGrowthFactor: 0.75
-  socketId: 0
-  connectionId: 0
+--- !u!4 &785375108
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 785375106}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 354.0706, y: 188.58905, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+--- !u!1 &835521746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 835521748}
+  - 114: {fileID: 835521747}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &835521747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 835521746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41386cca8574147908c7507b44564890, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   textField: {fileID: 1682286988}
 --- !u!4 &835521748
 Transform:
