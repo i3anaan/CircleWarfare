@@ -11,9 +11,9 @@ EditorBuildSettings:
     path: Assets/Scenes/S_planning.unity
   - enabled: 1
     path: Assets/Scenes/S_simulation.unity
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/C_setup.unity
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/C_planning.unity
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/C_simulation.unity

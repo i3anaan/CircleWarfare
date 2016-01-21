@@ -50,7 +50,7 @@ public class SetupServerGameController : BaseServerGameController {
 	}
 
 	void OnAllReady() {
-		ticksTillStart = (int) (5 / Time.fixedDeltaTime);
+		ticksTillStart = (int) (readyDelay / Time.fixedDeltaTime);
 	}
 
 	void OnNotAllReady() {

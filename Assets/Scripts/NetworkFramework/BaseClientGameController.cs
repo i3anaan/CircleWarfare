@@ -6,7 +6,7 @@ public class BaseClientGameController : NCMonoBehaviour
 {
 	public ClientNetworkManager networkManager;
 
-	void Awake() {
+	public void Awake() {
 		networkManager = (ClientNetworkManager) GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<ClientNetworkManager>();
 	}
 }

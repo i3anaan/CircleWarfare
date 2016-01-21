@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 
-public class SimulationServerGameController : NCMonoBehaviour {
+public class SimulationServerGameController : BaseServerGameController {
 
 	public static float CREEP_BASE_SPEED = 3f;
 	public static float CREEP_BASE_DAMAGE = 1f;
@@ -39,6 +39,7 @@ public class SimulationServerGameController : NCMonoBehaviour {
 					newCreep.speed = Random.Range (1f - speedRandomness, 1f + speedRandomness) * CREEP_BASE_SPEED;
 					newCreep.damage = Random.Range (1f - damageRandomness, 1f + damageRandomness) * CREEP_BASE_DAMAGE;
 					newCreep.life = Random.Range (1f - lifeRandomness, 1f + lifeRandomness) * CREEP_BASE_LIFE;
+					newCreep.priorities = networkManager.GetClientData (t).priorities;
 					creeps.Add (newCreep);
 				}
 			}

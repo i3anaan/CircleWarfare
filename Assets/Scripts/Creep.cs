@@ -12,14 +12,14 @@ public class Creep : MonoBehaviour {
 	public float life;
 	public Explosion explosionPrefab;
 	public Color color;
-	private float[] priority = new float[]{1f, 1f, 1f, 1f};
+	public float[] priorities = new float[]{1f, 1f, 1f, 1f};
 
 	// Use this for initialization
 	void Start () {
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<SimulationServerGameController>();
 		creeps = gc.creeps;
-		for (int i = 0; i < priority.Length; i++) {
-			priority [i] = Random.Range (1f, 3f);
+		for (int i = 0; i < priorities.Length; i++) {
+			priorities [i] = Random.Range (1f, 3f);
 		}
 		ReScale ();
 	}
@@ -89,8 +89,8 @@ public class Creep : MonoBehaviour {
 		foreach (Creep c in creeps) {
 			if (c && c.team != this.team) {
 				float dist = Vector2.Distance(this.transform.position, c.gameObject.transform.position);
-				if (dist / priority[c.team] < minDistance) {
-					minDistance = dist / priority[c.team];
+				if (dist / priorities[c.team] < minDistance) {
+					minDistance = dist / priorities[c.team];
 					target = c;
 				}
 			}
