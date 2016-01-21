@@ -39,7 +39,7 @@ public abstract class SimpleClientNetworkManager : BaseNetworkManager {
 	}
 
 	void OnDisable() {
-		//TODO move this to a different method?
+		//TODO throws error (no big deal though).
 		byte error;
 		NetworkTransport.Disconnect (localSocketId, connectionId, out error);
 		NetworkTransport.RemoveHost (localSocketId);

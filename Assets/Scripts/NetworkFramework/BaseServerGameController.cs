@@ -6,15 +6,9 @@ public class BaseServerGameController : NCMonoBehaviour
 {
 	public ServerNetworkManager networkManager;
 
-	public virtual void Start() {
-		OnLevelWasLoaded (-1);
-	}
-
-	void OnLevelWasLoaded(int level) {
+	public virtual void Awake() {
 		networkManager = (ServerNetworkManager) GameObject.FindGameObjectWithTag("NetworkManager").GetComponent<ServerNetworkManager>();
 	}
-
-
 
 	protected ClientData GetClient(int connectionId) {
 		//Shortcut method.

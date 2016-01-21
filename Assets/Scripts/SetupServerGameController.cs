@@ -19,15 +19,15 @@ public class SetupServerGameController : BaseServerGameController {
 	public int readyDelay = 5;
 	private int ticksTillStart = -1;
 
-	new void Start () {
-		base.Start ();
+	void Start () {
 		playersConnected = 0;
 	}
 
 	void FixedUpdate() {
 		if (ticksTillStart == 0) {
 			networkManager.SendDataAll (MESSAGE_SERVER_GAME_START);
-			SceneManager.LoadScene ("S_simulation");
+			networkManager.gameState.teams = networkManager.connectionIds.Count;
+			SceneManager.LoadScene ("S_planning");
 		} else if (ticksTillStart > 0) {
 			ticksTillStart--;
 			startCountdownField.text = "Game starts in: " + (ticksTillStart * Time.fixedDeltaTime);
@@ -87,7 +87,7 @@ public class SetupServerGameController : BaseServerGameController {
 			CheckAllReady ();
 			break;
 		case MESSAGE_CLIENT_NAME:
-			string name = BaseNetworkManager.BytesToString (rcvBuffer, 1, datasize - 1);
+			string name = Utils.BytesToString (rcvBuffer, 1, datasize - 1);
 			GetClient (connectionId).name = name;
 			break;			
 		default:

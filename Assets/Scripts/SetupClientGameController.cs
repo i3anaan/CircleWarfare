@@ -12,17 +12,12 @@ public class SetupClientGameController : BaseClientGameController {
 
 	private float cooldown;
 	public bool isReady;
+	public bool isConnected;
 
 	void FixedUpdate() {
-		connectedStatus.text = CheckConnection() ? "Connected!" : "Disconnected.";
-		ReadyButton.gameObject.SetActive (CheckConnection ());
-		isReady = CheckConnection() ? isReady : false;
-	}
-
-	public override void RcvConnect(int rcvHostId, int connectionId, int channelId) {
-		address.text = "[0.0.0.0]:" + networkManager.localPort;
-
-		SendName ();
+		connectedStatus.text = isConnected ? "Connected!" : "Disconnected.";
+		ReadyButton.gameObject.SetActive (isConnected);
+		isReady = isConnected ? isReady : false;
 	}
 
 	public void OnClickReadyButton() {
@@ -37,10 +32,20 @@ public class SetupClientGameController : BaseClientGameController {
 	private void SendName() {
 		byte commandByte = SetupServerGameController.MESSAGE_CLIENT_NAME;
 		string name = nameInputField.text;
-		byte[] nameBytes = BaseNetworkManager.StringToBytes (name);
-		byte[] bytes = BaseNetworkManager.ConcatBytes (commandByte, nameBytes);
+		byte[] nameBytes = Utils.StringToBytes (name);
+		byte[] bytes = Utils.ConcatBytes (commandByte, nameBytes);
 
 		networkManager.SendData(bytes); 
+	}
+
+	public override void RcvConnect(int rcvHostId, int connectionId, int channelId) {
+		isConnected = true;
+		address.text = "[0.0.0.0]:" + networkManager.localPort;
+		SendName ();
+	}
+
+	public override void RcvDisconnect(int rcvHostId, int connectionId, int channelId) {
+		isConnected = false;
 	}
 
 	public override void RcvData(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
@@ -52,5 +57,17 @@ public class SetupClientGameController : BaseClientGameController {
 			Debug.LogError ("Received unkown command!");
 			break;
 		}			
+	}
+
+	public override void RcvError(byte error, int rcvHostId, int connectionId, int channelId) {
+		base.RcvError (error, rcvHostId, connectionId, channelId);
+		switch ((NetworkError)error) {
+		case NetworkError.Timeout:
+			RcvDisconnect (rcvHostId, connectionId, channelId);
+			break;
+		default:
+			//Do nothing
+			break;
+		}
 	}
 }

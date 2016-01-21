@@ -5,11 +5,15 @@ using System.Collections.Generic;
 
 public class ServerNetworkManager : SimpleServerNetworkManager {
 
+	//Create a custom GameState class for your game.
+	//GameState needs the [Serializable] Attribute, so that it can be synchronized with the clients.
+	public GameState gameState;
 	public List<int> connectionIds;
 	private Dictionary<int, ClientData> clients = new Dictionary<int, ClientData>();
 
 	new void Awake() {
 		base.Awake ();
+		gameState = new GameState ();
 		SetupAsServer (7522, 8);
 	}
 
