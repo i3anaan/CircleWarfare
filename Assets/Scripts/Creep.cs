@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Creep : MonoBehaviour {
 
-	private GameController gc;
+	private SimulationServerGameController gc;
 	private List<Creep> creeps;
 	public int team;
 	public float speed;
@@ -16,7 +16,7 @@ public class Creep : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController>();
+		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<SimulationServerGameController>();
 		creeps = gc.creeps;
 		for (int i = 0; i < priority.Length; i++) {
 			priority [i] = Random.Range (1f, 3f);
@@ -77,7 +77,7 @@ public class Creep : MonoBehaviour {
 	}
 
 	void ReScale() {
-		float scale = Mathf.Max(this.life / GameController.CREEP_BASE_LIFE, 0.15f);
+		float scale = Mathf.Max(this.life / SimulationServerGameController.CREEP_BASE_LIFE, 0.15f);
 		this.transform.localScale = new Vector3 (scale, scale, scale);
 		this.GetComponent<Rigidbody2D> ().mass = 0.5f + scale / 2f;
 	}

@@ -38,18 +38,26 @@ public abstract class SimpleClientNetworkManager : BaseNetworkManager {
 		}
 	}
 
+	void OnDisable() {
+		//TODO move this to a different method?
+		byte error;
+		NetworkTransport.Disconnect (localSocketId, connectionId, out error);
+		NetworkTransport.RemoveHost (localSocketId);
+	}
+
+	public virtual void SendData(byte data) {
+		SendData (new byte[]{ data });
+	}
+
+	public virtual void SendData(byte[] data) {
+		SendData (data, data.Length);
+	}
+
 	public virtual void SendData(byte[] data, int datasize) {
 		byte error;
 		NetworkTransport.Send (localSocketId, connectionId, reliableChannelId, data, datasize, out error);
 		if (((NetworkError)error) != NetworkError.Ok) {
 			Debug.Log ("Send error: " + ((NetworkError)error));
 		}
-	}
-
-	void OnDisable() {
-		//TODO move this to a different method?
-		byte error;
-		NetworkTransport.Disconnect (localSocketId, connectionId, out error);
-		NetworkTransport.RemoveHost (localSocketId);
 	}
 }

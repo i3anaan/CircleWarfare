@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
 
-public class GameController : MonoBehaviour {
+public class SimulationServerGameController : NCMonoBehaviour {
 
 	public static float CREEP_BASE_SPEED = 3f;
 	public static float CREEP_BASE_DAMAGE = 1f;
@@ -56,6 +56,10 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void GameOver() {
-		SceneManager.LoadScene ("Server");
+		SceneManager.LoadScene ("S_planning");
+	}
+
+	public override void RcvData(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
+		StartGame ();
 	}
 }
