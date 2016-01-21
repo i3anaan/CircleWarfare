@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class SetupClientGameController : BaseClientGameController {
 	public Text connectedStatus;
@@ -13,11 +14,6 @@ public class SetupClientGameController : BaseClientGameController {
 	public bool isReady;
 
 	void FixedUpdate() {
-		cooldown += Time.fixedDeltaTime;
-		if (cooldown >= 1) {
-			cooldown = 0;
-			//networkManager.SendData (new byte[]{ 1 }, 1);
-		}
 		connectedStatus.text = CheckConnection() ? "Connected!" : "Disconnected.";
 		ReadyButton.gameObject.SetActive (CheckConnection ());
 		isReady = CheckConnection() ? isReady : false;
@@ -45,5 +41,16 @@ public class SetupClientGameController : BaseClientGameController {
 		byte[] bytes = BaseNetworkManager.ConcatBytes (commandByte, nameBytes);
 
 		networkManager.SendData(bytes); 
-	}		
+	}
+
+	public override void RcvData(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
+		switch (rcvBuffer[0]) {
+		case SetupServerGameController.MESSAGE_SERVER_GAME_START:
+			SceneManager.LoadScene ("C_planning");
+			break;
+		default:
+			Debug.LogError ("Received unkown command!");
+			break;
+		}			
+	}
 }

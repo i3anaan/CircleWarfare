@@ -9,13 +9,31 @@ public class SetupServerGameController : BaseServerGameController {
 	public const byte MESSAGE_CLIENT_READY = 1;
 	public const byte MESSAGE_CLIENT_NOT_READY = 2;
 	public const byte MESSAGE_CLIENT_NAME = 3;
+	public const byte MESSAGE_SERVER_GAME_START = 4;
+
+	public Text startCountdownField;
 
 	private int playersConnected;
 	public Text textField;
 
+	public int readyDelay = 5;
+	private int ticksTillStart = -1;
+
 	new void Start () {
 		base.Start ();
 		playersConnected = 0;
+	}
+
+	void FixedUpdate() {
+		if (ticksTillStart == 0) {
+			networkManager.SendDataAll (MESSAGE_SERVER_GAME_START);
+			SceneManager.LoadScene ("S_simulation");
+		} else if (ticksTillStart > 0) {
+			ticksTillStart--;
+			startCountdownField.text = "Game starts in: " + (ticksTillStart * Time.fixedDeltaTime);
+		} else {
+			startCountdownField.text = "Ready up to start the game!";
+		}
 	}
 
 	void CheckAllReady() {
@@ -26,13 +44,20 @@ public class SetupServerGameController : BaseServerGameController {
 
 		if (allReady) {
 			OnAllReady ();
+		} else {
+			OnNotAllReady ();
 		}
 	}
 
 	void OnAllReady() {
-		//TODO Send ready signal to clients.
-		SceneManager.LoadScene ("S_simulation");
+		ticksTillStart = (int) (5 / Time.fixedDeltaTime);
 	}
+
+	void OnNotAllReady() {
+		ticksTillStart = -1;
+	}
+		
+
 
 	public override void RcvConnect(int rcvHostId, int connectionId, int channelId) {
 		playersConnected++;
@@ -59,13 +84,14 @@ public class SetupServerGameController : BaseServerGameController {
 		case MESSAGE_CLIENT_NOT_READY:
 			GetClient (connectionId).ready = false;
 			Debug.Log (GetClient (connectionId) + " is no longer Ready!");
+			CheckAllReady ();
 			break;
 		case MESSAGE_CLIENT_NAME:
 			string name = BaseNetworkManager.BytesToString (rcvBuffer, 1, datasize - 1);
 			GetClient (connectionId).name = name;
 			break;			
 		default:
-			//Do nothing?
+			Debug.LogError ("Received unkown command!");
 			break;
 		}			
 	}
@@ -78,7 +104,7 @@ public class SetupServerGameController : BaseServerGameController {
 			RcvDisconnect (rcvHostId, connectionId, channelId);
 			break;
 		default:
-			//TODO Do nothing?
+			//Do nothing
 			break;
 		}
 	}

@@ -33,6 +33,23 @@ public class ServerNetworkManager : SimpleServerNetworkManager {
 	}
 
 	public bool RemoveClientData(int connectionId) {
+		connectionIds.Remove (connectionId);
 		return clients.Remove (connectionId);
-	}		
+	}
+
+
+
+	public virtual void SendDataAll(byte data) {
+		SendDataAll (new byte[]{ data });
+	}
+
+	public virtual void SendDataAll(byte[] data) {
+		SendDataAll (data, data.Length);
+	}
+
+	public virtual void SendDataAll(byte[] data, int datasize) {
+		foreach (int id in connectionIds) {
+			SendData (id, data, datasize);
+		}
+	}
 }
