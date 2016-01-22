@@ -50,7 +50,7 @@ public class SetupClientGameController : BaseClientGameController {
 
 	public override void RcvData(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
 		switch (rcvBuffer[0]) {
-		case SetupServerGameController.MESSAGE_SERVER_GAME_START:
+		case SetupServerGameController.MESSAGE_SERVER_NEXT_PHASE_PLANNING:
 			SceneManager.LoadScene ("C_planning");
 			break;
 		default:

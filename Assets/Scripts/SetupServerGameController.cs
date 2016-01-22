@@ -9,7 +9,7 @@ public class SetupServerGameController : BaseServerGameController {
 	public const byte MESSAGE_CLIENT_READY = 1;
 	public const byte MESSAGE_CLIENT_NOT_READY = 2;
 	public const byte MESSAGE_CLIENT_NAME = 3;
-	public const byte MESSAGE_SERVER_GAME_START = 4;
+	public const byte MESSAGE_SERVER_NEXT_PHASE_PLANNING = 4;
 
 	public Text startCountdownField;
 
@@ -25,7 +25,7 @@ public class SetupServerGameController : BaseServerGameController {
 
 	void FixedUpdate() {
 		if (ticksTillStart == 0) {
-			networkManager.SendDataAll (MESSAGE_SERVER_GAME_START);
+			networkManager.SendDataAll (MESSAGE_SERVER_NEXT_PHASE_PLANNING);
 			networkManager.gameState.teams = networkManager.connectionIds.Count;
 			SceneManager.LoadScene ("S_planning");
 		} else if (ticksTillStart > 0) {

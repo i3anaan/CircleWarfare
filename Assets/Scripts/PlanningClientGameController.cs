@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class PlanningClientGameController : BaseClientGameController {
 
@@ -73,6 +74,10 @@ public class PlanningClientGameController : BaseClientGameController {
 			this.playerId = (int)rcvBuffer [1];
 			Debug.Log ("Received player id: " + playerId);
 			InitializeUI ();
+			break;
+		case PlanningServerGameController.MESSAGE_SERVER_NEXT_PHASE_SIMULATION:
+			Debug.Log ("Loading next scene");
+			SceneManager.LoadScene ("C_simulation");
 			break;
 		default:
 			Debug.LogError ("Received unkown command!");

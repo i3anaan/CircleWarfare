@@ -1,22 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlanningServerGameController : BaseServerGameController {
 
+	public float planningPhaseDuration;
+	private int planningPhaseTicks;
+
 	public const byte MESSAGE_SERVER_GAME_STATE = 5;
 	public const byte MESSAGE_SERVER_PLAYER_ID = 6;
+	public const byte MESSAGE_SERVER_NEXT_PHASE_SIMULATION = 8;
 	public const byte MESSAGE_CLIENT_GAME_PRIORITY = 7;
 
 	new void Awake() {
 		base.Awake ();
 		SendGameState ();
 		SendPlayerIds ();
+
+	}
+
+	void FixedUpdate() {
+		if (planningPhaseTicks > planningPhaseDuration / Time.fixedDeltaTime) {
+			SendNextPhase ();
+			SceneManager.LoadScene ("S_simulation");
+		}
+
+		planningPhaseTicks++;
 	}
 
 	void SendGameState() {
 		byte commandByte = MESSAGE_SERVER_GAME_STATE;
 		byte[] gameStateBytes = Utils.ObjectToBytes (networkManager.gameState);
 		networkManager.SendDataAll(Utils.ConcatBytes(commandByte, gameStateBytes));
+	}
+
+	void SendNextPhase() {
+		byte commandByte = MESSAGE_SERVER_NEXT_PHASE_SIMULATION;
+		networkManager.SendDataAll (commandByte);
 	}
 
 	void SendPlayerIds() {
