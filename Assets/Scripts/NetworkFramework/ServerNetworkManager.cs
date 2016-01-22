@@ -26,19 +26,24 @@ public class ServerNetworkManager : SimpleServerNetworkManager {
 	}
 
 	public void AddClientData(ClientData client) {
+		//Debug.Log("Adding ClientData with playerId: " + client.connectionId + 
+		//TODO hiermee verder gaan!
+		Debug.LogError("TODO!!!!");
 		clients.Add (client.connectionId, client);
 		connectionIds.Add (client.connectionId);
 	}
 
-	public ClientData GetClientData(int connectionId) {
-		ClientData client = null;
-		clients.TryGetValue (connectionId, out client);
+	public ClientData GetClientData(int playerId) {
+		ClientData client = new ClientData(-1);
+		if (!clients.TryGetValue (playerId, out client)) {
+			Debug.LogError ("Can not find a ClientData for playerId: " + playerId);
+		}
 		return client;
 	}
 
-	public bool RemoveClientData(int connectionId) {
-		connectionIds.Remove (connectionId);
-		return clients.Remove (connectionId);
+	public bool RemoveClientData(int playerId) {
+		connectionIds.Remove (playerId);
+		return clients.Remove (playerId);
 	}
 
 

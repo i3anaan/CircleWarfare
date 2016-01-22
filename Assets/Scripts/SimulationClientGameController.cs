@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SimulationClientGameController : MonoBehaviour {
+public class SimulationClientGameController : BaseClientGameController {
+
+	private int cooldown;
 
 	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	void FixedUpdate () {
+		if (cooldown > 1 / Time.fixedDeltaTime) {
+			networkManager.SendData ((byte)1);
+		}			
+
+		cooldown++;
 	}
 }

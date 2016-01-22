@@ -198,6 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64fdebbc5b49f4ea8848b44dad521b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  networkManager: {fileID: 0}
+  planningPhaseDuration: 10
 --- !u!4 &1254684878
 Transform:
   m_ObjectHideFlags: 0

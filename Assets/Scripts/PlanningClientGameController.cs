@@ -18,18 +18,20 @@ public class PlanningClientGameController : BaseClientGameController {
 
 	public void Awake() {
 		base.Awake ();
-		InitializeUI ();
 	}
 
 	private void InitializeUI() {
 		sliders = new List<Slider> ();
-		int sliderCount = networkManager.gameState.teams;
+		//int sliderCount = networkManager.gameState.teams;
+		int sliderCount = 5;
 		for (int i = 0; i < sliderCount; i++) {
-			Slider slider = (Slider) GameObject.Instantiate (sliderPrefab, new Vector3 (-(sliderCount/2)*100 + i * 100, 0, 0), Quaternion.identity);
+			Vector3 sliderPos = new Vector3 (-(sliderCount / 2) * 100 + i * 100, 0, 0);
+			Slider slider = (Slider) GameObject.Instantiate (sliderPrefab, sliderPos, Quaternion.identity);
 			sliders.Add (slider);
 			slider.onValueChanged.AddListener (delegate {SliderChanged ();});
-			slider.transform.SetParent (canvas.transform);
+			slider.transform.SetParent (canvas.transform, false);
 			slider.transform.localScale = new Vector3 (1, 1, 1);
+			//slider.transform.position = sliderPos;
 			if (i == playerId) {
 				slider.enabled = false;
 			}
@@ -76,7 +78,6 @@ public class PlanningClientGameController : BaseClientGameController {
 			InitializeUI ();
 			break;
 		case PlanningServerGameController.MESSAGE_SERVER_NEXT_PHASE_SIMULATION:
-			Debug.Log ("Loading next scene");
 			SceneManager.LoadScene ("C_simulation");
 			break;
 		default:

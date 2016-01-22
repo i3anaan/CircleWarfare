@@ -33,13 +33,15 @@ public class SimulationServerGameController : BaseServerGameController {
 				Color color = colors [t];
 				for (int c = 0; c < creepCountPerTeam; c++) {
 					Creep newCreep = (Creep)GameObject.Instantiate (creepPrefab, new Vector3 (), Quaternion.identity);
+					ClientData client = networkManager.GetClientData (t + 1 - 1);
 					newCreep.gameObject.GetComponent<SpriteRenderer> ().color = color;
 					newCreep.team = t;
 					newCreep.color = color;
 					newCreep.speed = Random.Range (1f - speedRandomness, 1f + speedRandomness) * CREEP_BASE_SPEED;
 					newCreep.damage = Random.Range (1f - damageRandomness, 1f + damageRandomness) * CREEP_BASE_DAMAGE;
 					newCreep.life = Random.Range (1f - lifeRandomness, 1f + lifeRandomness) * CREEP_BASE_LIFE;
-					newCreep.priorities = networkManager.GetClientData (t).priorities;
+					newCreep.priorities = client.priorities;
+					//Player id starts at 1, so T + 1, -1 since we are retrieving from a list.
 					creeps.Add (newCreep);
 				}
 			}

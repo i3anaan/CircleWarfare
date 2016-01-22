@@ -51,7 +51,7 @@ public class PlanningServerGameController : BaseServerGameController {
 		switch (rcvBuffer[0]) {
 		case MESSAGE_CLIENT_GAME_PRIORITY:
 			byte[] bytes = Utils.SubArray (rcvBuffer, 1, datasize);
-			float[] priorities = (float[])Utils.BytesToObject (bytes);
+			float[] priorities = (float[]) Utils.BytesToObject (bytes);
 			UpdatePlayerPriorities (connectionId, priorities);
 			break;
 		default:
@@ -62,6 +62,6 @@ public class PlanningServerGameController : BaseServerGameController {
 
 	private void UpdatePlayerPriorities(int connectionId, float[] priorities) {
 		Debug.Log ("Updating priorities for player: " + connectionId);
-		networkManager.GetClientData (connectionId).priorities = priorities;
+		networkManager.GetClientData (connectionId - 1).priorities = priorities;
 	}
 }
