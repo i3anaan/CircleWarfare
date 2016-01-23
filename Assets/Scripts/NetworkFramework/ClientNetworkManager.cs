@@ -16,7 +16,7 @@ public class ClientNetworkManager : SimpleClientNetworkManager {
 	}
 
 	public void Connect(string address) {
-		Debug.Log ("Connecting to: " + address);
+		//Debug.Log ("Connecting to: " + address);
 		ConnectAsClient (0, address, 7522);
 	}
 

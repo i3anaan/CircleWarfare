@@ -23,6 +23,10 @@ public class SetupClientGameController : BaseClientGameController {
 	public void OnClickReadyButton() {
 		SendReadyMessage (!isReady);
 		isReady = !isReady;
+		ColorBlock colorBlock = ReadyButton.colors;
+		colorBlock.normalColor = isReady ? Color.green : Color.white;
+		colorBlock.highlightedColor = isReady ? Color.green : Color.white;
+		ReadyButton.colors = colorBlock;
 	}
 
 	public void SendReadyMessage(bool ready) {

@@ -16,7 +16,7 @@ public abstract class SimpleClientNetworkManager : BaseNetworkManager {
 	public virtual void ConnectAsClient(int socketIdPar, string externalIp, int externalPort) {
 		if (socketIdPar == 0) {
 			localPort = getAvailablePort ();
-			Debug.Log ("Found free socket: " + localPort);
+			//Debug.Log ("Found free socket: " + localPort);
 		} else {
 			localPort = socketIdPar;
 		}

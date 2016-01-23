@@ -32,7 +32,6 @@ public abstract class BaseNetworkManager : MonoBehaviour, INetworkCallback{
 	}
 
 	public virtual void OnLevelWasLoaded(int level) {
-		Debug.Log ("OnLevelWasLoaded()");
 		if (level == 0 && sceneAge > 0) {
 			GameObject.Destroy (this.gameObject);
 		}

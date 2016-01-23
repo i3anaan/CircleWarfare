@@ -73,7 +73,7 @@ public class PlanningClientGameController : BaseClientGameController {
 			byte[] bytes = Utils.SubArray (rcvBuffer, 1, datasize);
 			GameState gs = (GameState) Utils.BytesToObject (bytes);
 			networkManager.gameState = gs;
-			Debug.Log ("Received GameState: " + gs);
+			//Debug.Log ("Received GameState: " + gs);
 			break;
 		case PlanningServerGameController.MESSAGE_SERVER_PLAYER_ID:
 			this.playerId = (int)rcvBuffer [1];

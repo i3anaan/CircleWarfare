@@ -9,14 +9,12 @@ public class CustomNetworkDiscovery : NetworkDiscovery {
 	void Start() {
 		this.Initialize ();
 		GameObject[] clients = GameObject.FindGameObjectsWithTag ("NetworkManager");
-		Debug.Log ("ClientNetworkManagers found: " + clients.Length);
 		client = clients[clients.Length-1].GetComponent<ClientNetworkManager> ();
 		//If the first scene is reloaded, for a moment 2 ClientNetworkManagers exist.
 		//The oldest one will then delete itself, but before doing so, this will already look for NetworkManagers.
 		//Thus the solution is to always link the youngest (last) ClientNetworkManager.
 
 		if (client == null) {
-			Debug.Log ("LocalNetworkDiscovery: Starting as server!");
 			this.StartAsServer ();
 		}
 	}
