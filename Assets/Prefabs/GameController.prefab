@@ -36,12 +36,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 138416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0c597becb7314453b6d7a7325a3f3d6, type: 3}
+  m_Script: {fileID: 11500000, guid: d02081143ba154993bd12ebf80cf06a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  networkManager: {fileID: 0}
+  speedRandomness: 0.8
+  damageRandomness: 0.8
+  lifeRandomness: 0.8
   creepPrefab: {fileID: 11440806, guid: 5f0165179837948c9a6760aab9bd7391, type: 2}
   teamCount: 4
-  creepCountPerTeam: 1
+  creepCountPerTeam: 10
   creeps: []
   xRange: 8.388889
   yRange: 4.5
@@ -85,6 +89,18 @@ Prefab:
       propertyPath: sphere
       value: 
       objectReference: {fileID: 142050, guid: 0afc249105f8a427f8ac4ae6fe9aee0f, type: 2}
+    - target: {fileID: 0}
+      propertyPath: speedRandomness
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: damageRandomness
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: lifeRandomness
+      value: 0.8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 138416}

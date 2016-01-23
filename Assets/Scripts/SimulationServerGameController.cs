@@ -22,9 +22,20 @@ public class SimulationServerGameController : BaseServerGameController {
 	public float yRange;
 
 	private bool started;
+	public bool firstBlood;
+
+	private int ticksToRestoreTimeScale;
 
 	public static Color[] colors = new Color[]{Color.red, Color.blue, Color.green, Color.yellow, Color.cyan, Color.magenta, Color.grey};
 	//TODO move this somewhere else?
+
+	public void FixedUpdate() {
+		if (Time.timeScale < 1) {
+			Time.timeScale += (1 - Time.timeScale) / (ticksToRestoreTimeScale + 1);
+		} else {
+			Time.timeScale = 1;
+		}
+	}
 
 	public void StartGame() {
 		if (!started) {
@@ -36,6 +47,8 @@ public class SimulationServerGameController : BaseServerGameController {
 				for (int c = 0; c < creepCountPerTeam; c++) {
 					Creep newCreep = (Creep)GameObject.Instantiate (creepPrefab, new Vector3 (), Quaternion.identity);
 					ClientData client = networkManager.GetClientData (playerId);
+					newCreep.gc = this;
+					newCreep.creeps = creeps;
 					newCreep.gameObject.GetComponent<SpriteRenderer> ().color = color;
 					newCreep.team = t;
 					newCreep.color = color;
@@ -54,10 +67,15 @@ public class SimulationServerGameController : BaseServerGameController {
 		}
 	}
 
-	void SpawnCreeps() {
+	public void SpawnCreeps() {
 		foreach (Creep creep in creeps) {
 			creep.transform.position = new Vector3(Random.Range(-xRange, xRange), Random.Range(-yRange, yRange), 0);
 		}
+	}
+
+	public void SlowPhysics(int seconds) {
+		Time.timeScale = 0.1f;
+		ticksToRestoreTimeScale = (int) (seconds / Time.timeScale);
 	}
 
 	public void GameOver() {

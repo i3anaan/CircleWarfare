@@ -1288,6 +1288,7 @@ MonoBehaviour:
   localSocketId: 0
   localPort: 0
   connectionId: 0
+  autoConnect: 1
   gameState:
     teams: 0
   networkDiscovery: {fileID: 1326801355}

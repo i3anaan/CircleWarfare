@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
 public class PlanningClientGameController : BaseClientGameController {
-
+	
 	public Slider sliderPrefab;
 	public Canvas canvas;
 

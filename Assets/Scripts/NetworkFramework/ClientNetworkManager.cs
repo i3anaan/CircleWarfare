@@ -5,14 +5,25 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class ClientNetworkManager : SimpleClientNetworkManager {
-	
+
+	public bool autoConnect;
+
 	//Create a custom GameState class for your game.
 	//GameState needs the [Serializable] Attribute, so that it can be synchronized with the clients.
 	public GameState gameState;
 	public CustomNetworkDiscovery networkDiscovery;
 
+	void Start() {
+		OnLevelWasLoaded (-1);
+		if (autoConnect) {
+			ConnectLocalNetwork ();
+		}
+	}
+
 	public void ConnectLocalNetwork() {
-		networkDiscovery.StartAsClient ();
+		if (networkDiscovery != null) {
+			networkDiscovery.StartAsClient ();
+		}
 	}
 
 	public void Connect(string address) {
@@ -22,10 +33,6 @@ public class ClientNetworkManager : SimpleClientNetworkManager {
 
 	public void ConnectLocalHost() {
 		ConnectAsClient (0, "0.0.0.0", 7522);
-	}
-
-	void Start() {
-		OnLevelWasLoaded (-1);
 	}
 
 	public override void OnLevelWasLoaded(int level) {

@@ -2,7 +2,7 @@
 public class ClientData
 {
 	public int playerId = -1;
-	public bool ready = false;
+	public bool ready = true;
 	public string name = "not_set";
 	public float[] priorities = new float[16];
 

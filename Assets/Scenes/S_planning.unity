@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkManager: {fileID: 0}
-  planningPhaseDuration: 10
+  planningPhaseDuration: 3
   countdownText: {fileID: 1954300337}
 --- !u!4 &1254684878
 Transform:

@@ -42,6 +42,7 @@ public class SetupServerGameController : BaseServerGameController {
 
 		if (allReady) {
 			if (networkManager.connectionIds.Count > 1) {
+				//TODO set this > 1 for real game;
 				OnAllReady ();
 			} else {
 				startCountdownField.text = "This game requires atleast 2 players!";
@@ -68,6 +69,8 @@ public class SetupServerGameController : BaseServerGameController {
 
 		ClientData client = new ClientData (connectionId);
 		networkManager.AddClientData (client);
+		CheckReady ();
+		//TODO this is kind of an ugly hack to auto-ready;
 	}
 
 	public override void RcvDisconnect(int rcvHostId, int connectionId, int channelId) {

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class Creep : MonoBehaviour {
 
-	private SimulationServerGameController gc;
-	private List<Creep> creeps;
+	public SimulationServerGameController gc;
+	public List<Creep> creeps;
 	public int team;
 	public float speed;
 	public float damage;
@@ -16,8 +16,6 @@ public class Creep : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<SimulationServerGameController>();
-		creeps = gc.creeps;
 		ReScale ();
 	}
 	
@@ -47,25 +45,13 @@ public class Creep : MonoBehaviour {
 	}
 
 	void Die() {
-		//Explode
-		/*
-		float explDist = 3f;
-		float explForce = 100f;
-
-		foreach (Creep c in creeps) {
-			if (c) {
-				float dist = Vector2.Distance(this.transform.position, c.transform.position);
-				dist = dist - c.transform.localScale.x;
-				if (dist < explDist) {
-					Vector3 dir = (c.transform.position - this.transform.position).normalized;
-					Vector3 force = dir * (dist / explDist) * explForce;
-					c.GetComponent<Rigidbody2D>().AddForce(force);
-				}
-			}
-		}
-		*/
 		Explosion exp = (Explosion) GameObject.Instantiate (explosionPrefab, this.transform.position, this.transform.rotation);
 		exp.color = this.color;
+		if (!gc.firstBlood) {
+			Debug.Log ("FirstBlood!");
+			gc.firstBlood = true;
+			gc.SlowPhysics (5);
+		}
 		GameObject.Destroy (this.gameObject);
 	}
 
@@ -96,7 +82,6 @@ public class Creep : MonoBehaviour {
 		if (!target) {
 			gc.GameOver();
 		}
-
 		return target;
 	}
 }
