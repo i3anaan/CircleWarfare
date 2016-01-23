@@ -1,15 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Creep : NetworkBehaviour {
+public class Creep : MonoBehaviour {
 
-	public static float BASE_SPEED = 3f;
-	public static float BASE_DAMAGE = 1f;
-	public static float BASE_LIFE = 100f;
-
-	private GameController gc;
+	private SimulationServerGameController gc;
 	private List<Creep> creeps;
 	public int team;
 	public float speed;
@@ -17,15 +12,12 @@ public class Creep : NetworkBehaviour {
 	public float life;
 	public Explosion explosionPrefab;
 	public Color color;
-	private float[] priority = new float[]{1f, 1f, 1f, 1f};
+	public float[] priorities = new float[]{1f, 1f, 1f, 1f};
 
 	// Use this for initialization
 	void Start () {
-		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController>();
+		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<SimulationServerGameController>();
 		creeps = gc.creeps;
-		for (int i = 0; i < priority.Length; i++) {
-			priority [i] = Random.Range (1f, 3f);
-		}
 		ReScale ();
 	}
 	
@@ -37,8 +29,6 @@ public class Creep : NetworkBehaviour {
 			Vector3 dir = (target.transform.position - this.transform.position).normalized;
 			float mass = this.GetComponent<Rigidbody2D> ().mass;
 			this.GetComponents<Rigidbody2D> () [0].AddForce (dir * speed * mass);
-
-			//this.transform.position = Vector3.MoveTowards (this.transform.position, target.transform.position, speed);
 
 			if (Vector2.Distance (this.transform.position, target.transform.position) < (this.transform.localScale.x + target.transform.localScale.x) * 0.51f) {
 				//Fighting the target;
@@ -84,7 +74,7 @@ public class Creep : NetworkBehaviour {
 	}
 
 	void ReScale() {
-		float scale = Mathf.Max(this.life / BASE_LIFE, 0.15f);
+		float scale = Mathf.Max(this.life / SimulationServerGameController.CREEP_BASE_LIFE, 0.15f);
 		this.transform.localScale = new Vector3 (scale, scale, scale);
 		this.GetComponent<Rigidbody2D> ().mass = 0.5f + scale / 2f;
 	}
@@ -96,8 +86,8 @@ public class Creep : NetworkBehaviour {
 		foreach (Creep c in creeps) {
 			if (c && c.team != this.team) {
 				float dist = Vector2.Distance(this.transform.position, c.gameObject.transform.position);
-				if (dist / priority[c.team] < minDistance) {
-					minDistance = dist / priority[c.team];
+				if (dist / priorities[c.team] < minDistance) {
+					minDistance = dist / priorities[c.team];
 					target = c;
 				}
 			}

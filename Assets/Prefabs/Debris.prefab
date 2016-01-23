@@ -11,8 +11,6 @@ GameObject:
   - 212: {fileID: 21225656}
   - 58: {fileID: 5858882}
   - 50: {fileID: 5023232}
-  - 114: {fileID: 11411014}
-  - 114: {fileID: 11419840}
   m_Layer: 8
   m_Name: Debris
   m_TagString: Untagged
@@ -63,58 +61,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &11411014
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 172
-    i1: 144
-    i2: 29
-    i3: 70
-    i4: 180
-    i5: 76
-    i6: 228
-    i7: 34
-    i8: 235
-    i9: 75
-    i10: 120
-    i11: 66
-    i12: 224
-    i13: 79
-    i14: 13
-    i15: 168
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
---- !u!114 &11419840
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 2
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 3
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!212 &21225656
 SpriteRenderer:
   m_ObjectHideFlags: 1
