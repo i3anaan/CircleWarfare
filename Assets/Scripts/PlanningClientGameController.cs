@@ -36,6 +36,8 @@ public class PlanningClientGameController : BaseClientGameController {
 				slider.interactable = false;
 			}
 		}
+
+		syncPriorityValues ();
 	}
 
 	public void SliderChanged() {
