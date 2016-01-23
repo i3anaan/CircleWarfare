@@ -16,6 +16,7 @@ public class ClientNetworkManager : SimpleClientNetworkManager {
 	}
 
 	public void Connect(string address) {
+		Debug.Log ("Connecting to: " + address);
 		ConnectAsClient (0, address, 7522);
 	}
 
@@ -27,7 +28,8 @@ public class ClientNetworkManager : SimpleClientNetworkManager {
 		OnLevelWasLoaded (-1);
 	}
 
-	void OnLevelWasLoaded(int level) {
+	public override void OnLevelWasLoaded(int level) {
+		base.OnLevelWasLoaded (level);
 		networkCallback = (INetworkCallback) GameObject.FindGameObjectWithTag("GameController").GetComponent<INetworkCallback>();
 	}
 }

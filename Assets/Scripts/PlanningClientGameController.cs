@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 public class PlanningClientGameController : BaseClientGameController {
 
@@ -86,5 +87,24 @@ public class PlanningClientGameController : BaseClientGameController {
 			Debug.LogError ("Received unkown command!");
 			break;
 		}			
+	}
+
+
+
+
+	public override void RcvDisconnect(int rcvHostId, int connectionId, int channelId) {
+		SceneManager.LoadScene ("C_setup");
+	}
+
+	public override void RcvError(byte error, int rcvHostId, int connectionId, int channelId) {
+		base.RcvError (error, rcvHostId, connectionId, channelId);
+		switch ((NetworkError)error) {
+		case NetworkError.Timeout:
+			RcvDisconnect (rcvHostId, connectionId, channelId);
+			break;
+		default:
+			//Do nothing
+			break;
+		}
 	}
 }

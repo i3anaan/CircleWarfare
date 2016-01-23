@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public abstract class BaseNetworkManager : MonoBehaviour, INetworkCallback{
 
 	public INetworkCallback networkCallback;
+	private int sceneAge;
 
 	public void Awake() {
 		DontDestroyOnLoad (transform.gameObject);
@@ -29,6 +30,15 @@ public abstract class BaseNetworkManager : MonoBehaviour, INetworkCallback{
 
 		return endpoint.Port;
 	}
+
+	public virtual void OnLevelWasLoaded(int level) {
+		Debug.Log ("OnLevelWasLoaded()");
+		if (level == 0 && sceneAge > 0) {
+			GameObject.Destroy (this.gameObject);
+		}
+		sceneAge++;
+	}
+		
 
 	public void Update() {
 		int recHostId; 

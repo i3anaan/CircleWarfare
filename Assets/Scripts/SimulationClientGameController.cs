@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class SimulationClientGameController : BaseClientGameController {
 
@@ -13,5 +15,21 @@ public class SimulationClientGameController : BaseClientGameController {
 		}			
 
 		cooldown++;
+	}
+
+	public override void RcvDisconnect(int rcvHostId, int connectionId, int channelId) {
+		SceneManager.LoadScene ("C_setup");
+	}
+
+	public override void RcvError(byte error, int rcvHostId, int connectionId, int channelId) {
+		base.RcvError (error, rcvHostId, connectionId, channelId);
+		switch ((NetworkError)error) {
+		case NetworkError.Timeout:
+			RcvDisconnect (rcvHostId, connectionId, channelId);
+			break;
+		default:
+			//Do nothing
+			break;
+		}
 	}
 }
