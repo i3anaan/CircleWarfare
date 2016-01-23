@@ -22,7 +22,11 @@ public class SimulationServerGameController : BaseServerGameController {
 	public float yRange;
 
 	private bool started;
+	public bool gameOver;
 	public bool firstBlood;
+
+	public TextSplasher splasher;
+	public GameObject firstBloodSplash;
 
 	private static GameObject creepStore;
 	private static GameObject debrisStore;
@@ -85,6 +89,7 @@ public class SimulationServerGameController : BaseServerGameController {
 				creeps.Add (newCreep);
 			}
 		}
+		splasher.Splash ("FIGHT!!", 1, 2);
 	}
 
 	public void SlowPhysics(int seconds) {
@@ -93,10 +98,28 @@ public class SimulationServerGameController : BaseServerGameController {
 	}
 
 	public void GameOver() {
+		if (!gameOver) {
+			gameOver = true;
+			splasher.Splash ("GAME OVER", 10, 1);
+			Invoke ("NextScene", 9);
+		}
+	}
+
+	private void NextScene() {
 		SceneManager.LoadScene ("S_simulation");
 	}
+		
 
 	public override void RcvData(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
 		StartGame ();
+	}
+
+
+
+
+	public void FirstBlood() {
+		firstBlood = true;
+		SlowPhysics (5);
+		splasher.SplashPrefab (firstBloodSplash);
 	}
 }

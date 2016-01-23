@@ -48,9 +48,7 @@ public class Creep : MonoBehaviour {
 		Explosion exp = (Explosion) GameObject.Instantiate (explosionPrefab, this.transform.position, this.transform.rotation);
 		exp.color = this.color;
 		if (!gc.firstBlood) {
-			Debug.Log ("FirstBlood!");
-			gc.firstBlood = true;
-			gc.SlowPhysics (5);
+			gc.FirstBlood ();
 		}
 		GameObject.Destroy (this.gameObject);
 	}

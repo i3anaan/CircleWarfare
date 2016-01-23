@@ -1,15 +1,15 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &106090
+--- !u!1 &150292
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 224: {fileID: 22430594}
-  - 222: {fileID: 22259742}
-  - 114: {fileID: 11460462}
+  - 224: {fileID: 22415510}
+  - 222: {fileID: 22271062}
+  - 114: {fileID: 11456622}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -17,43 +17,45 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &119180
+--- !u!1 &170714
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 224: {fileID: 22444796}
-  - 114: {fileID: 11452498}
-  - 114: {fileID: 11480552}
+  - 224: {fileID: 22438190}
+  - 114: {fileID: 11479994}
+  - 114: {fileID: 11422058}
   m_Layer: 5
-  m_Name: Text Splash
+  m_Name: FirstBloodSplash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &11452498
+--- !u!114 &11422058
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 119180}
+  m_GameObject: {fileID: 170714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d113c343b9397443e8006ec2b99bb4bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d0fa208008824937ac856e0f6d92ad5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startScale: {x: 20, y: 20, z: 20}
-  scaleTime: 0.5
-  deltaScalePower: 0.5
---- !u!114 &11460462
+  direction: {x: 0, y: 1, z: 0}
+  startDropSpeed: 10
+  acceleration: 0
+  dropping: 0
+  dropDelay: 3
+--- !u!114 &11456622
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 106090}
+  m_GameObject: {fileID: 150292}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
@@ -81,55 +83,54 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: FIRST BLOOD
---- !u!114 &11480552
+--- !u!114 &11479994
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 119180}
+  m_GameObject: {fileID: 170714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d0fa208008824937ac856e0f6d92ad5, type: 3}
+  m_Script: {fileID: 11500000, guid: d113c343b9397443e8006ec2b99bb4bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0.1, y: -1, z: 0}
-  startDropSpeed: -20
-  acceleration: 3
-  dropping: 0
---- !u!222 &22259742
+  startScale: {x: 10, y: 10, z: 10}
+  scaleTime: 0.3
+  deltaScalePower: 0.5
+--- !u!222 &22271062
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 106090}
---- !u!224 &22430594
+  m_GameObject: {fileID: 150292}
+--- !u!224 &22415510
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 106090}
+  m_GameObject: {fileID: 150292}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 22444796}
+  m_Father: {fileID: 22438190}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &22444796
+--- !u!224 &22438190
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 119180}
+  m_GameObject: {fileID: 170714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.909091, y: 2.909091, z: 2.909091}
   m_Children:
-  - {fileID: 22430594}
+  - {fileID: 22415510}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
@@ -143,8 +144,16 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: dropDelay
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: startDropSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 119180}
+  m_RootGameObject: {fileID: 170714}
   m_IsPrefabParent: 1

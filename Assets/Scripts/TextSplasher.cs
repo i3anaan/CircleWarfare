@@ -13,18 +13,22 @@ public class TextSplasher : MonoBehaviour {
 	{
 		public string text;
 		public float duration;
+		public GameObject obj;
 	}
 
 	void Awake() {
 		queue = new List<SplashCommand>();
-		Splash ("TRIPLE KILL", 3, 10);
 	}
 
 	void FixedUpdate() {
 		if (queue.Count > 0) {
 			SplashCommand cmd = queue [0];
 			queue.RemoveAt (0);
-			Splash (cmd.text, cmd.duration);
+			if (cmd.obj == null) {
+				Splash (cmd.text, cmd.duration);
+			} else {
+				Splash (cmd.obj);
+			}
 		}
 	}
 
@@ -38,11 +42,23 @@ public class TextSplasher : MonoBehaviour {
 		}
 	}
 
+	public void SplashPrefab(GameObject splash) {
+		SplashCommand cmd = new SplashCommand();
+		cmd.obj = splash;
+
+		queue.Add(cmd);
+	}
+		
+
 	private void Splash(string text, float duration) {
 		splash = Instantiate (splashPrefab);
 		splash.transform.SetParent (canvas.transform, false);
 		splash.transform.GetChild (0).GetComponent<Text> ().text = text;
 		splash.GetComponent<DropExit> ().dropDelay = duration;
 	}
-		
+
+	private void Splash(GameObject customPrefab) {
+		splash = Instantiate (customPrefab);
+		splash.transform.SetParent (canvas.transform, false);
+	}		
 }

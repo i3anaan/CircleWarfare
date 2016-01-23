@@ -232,7 +232,7 @@ MonoBehaviour:
   networkManager: {fileID: 0}
   startCountdownField: {fileID: 1472872054}
   textField: {fileID: 1682286988}
-  readyDelay: 1
+  readyDelay: 3
 --- !u!4 &835521748
 Transform:
   m_ObjectHideFlags: 0
