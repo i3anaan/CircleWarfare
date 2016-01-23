@@ -26,11 +26,8 @@ public class ServerNetworkManager : SimpleServerNetworkManager {
 	}
 
 	public void AddClientData(ClientData client) {
-		//Debug.Log("Adding ClientData with playerId: " + client.connectionId + 
-		//TODO hiermee verder gaan!
-		Debug.LogError("TODO!!!!");
-		clients.Add (client.connectionId, client);
-		connectionIds.Add (client.connectionId);
+		clients.Add (client.playerId, client);
+		connectionIds.Add (client.playerId);
 	}
 
 	public ClientData GetClientData(int playerId) {

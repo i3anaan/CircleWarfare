@@ -16,14 +16,9 @@ public class PlanningClientGameController : BaseClientGameController {
 	private GameState gameState;
 	public int playerId;
 
-	public void Awake() {
-		base.Awake ();
-	}
-
 	private void InitializeUI() {
 		sliders = new List<Slider> ();
-		//int sliderCount = networkManager.gameState.teams;
-		int sliderCount = 5;
+		int sliderCount = networkManager.gameState.teams;
 		for (int i = 0; i < sliderCount; i++) {
 			Vector3 sliderPos = new Vector3 (-(sliderCount / 2) * 100 + i * 100, 0, 0);
 			Slider slider = (Slider) GameObject.Instantiate (sliderPrefab, sliderPos, Quaternion.identity);
@@ -31,9 +26,14 @@ public class PlanningClientGameController : BaseClientGameController {
 			slider.onValueChanged.AddListener (delegate {SliderChanged ();});
 			slider.transform.SetParent (canvas.transform, false);
 			slider.transform.localScale = new Vector3 (1, 1, 1);
-			//slider.transform.position = sliderPos;
-			if (i == playerId) {
-				slider.enabled = false;
+
+			//Set slider top-part color
+			slider.transform.GetChild (0).gameObject.GetComponent<Image> ().color = SimulationServerGameController.colors [i];
+			//Set slider bottom-part color
+			slider.transform.GetChild (1).GetChild(0).gameObject.GetComponent<Image> ().color = SimulationServerGameController.colors [i];
+
+			if (i == playerId - 1) {
+				slider.interactable = false;
 			}
 		}
 	}

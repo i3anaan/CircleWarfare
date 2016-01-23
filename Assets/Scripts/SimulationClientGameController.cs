@@ -9,6 +9,7 @@ public class SimulationClientGameController : BaseClientGameController {
 	void FixedUpdate () {
 		if (cooldown > 1 / Time.fixedDeltaTime) {
 			networkManager.SendData ((byte)1);
+			cooldown = 0;
 		}			
 
 		cooldown++;

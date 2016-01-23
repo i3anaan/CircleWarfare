@@ -18,9 +18,6 @@ public class Creep : MonoBehaviour {
 	void Start () {
 		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<SimulationServerGameController>();
 		creeps = gc.creeps;
-		for (int i = 0; i < priorities.Length; i++) {
-			priorities [i] = Random.Range (1f, 3f);
-		}
 		ReScale ();
 	}
 	

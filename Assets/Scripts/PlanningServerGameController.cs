@@ -61,7 +61,6 @@ public class PlanningServerGameController : BaseServerGameController {
 	}
 
 	private void UpdatePlayerPriorities(int connectionId, float[] priorities) {
-		Debug.Log ("Updating priorities for player: " + connectionId);
-		networkManager.GetClientData (connectionId - 1).priorities = priorities;
+		networkManager.GetClientData (connectionId).priorities = priorities;
 	}
 }

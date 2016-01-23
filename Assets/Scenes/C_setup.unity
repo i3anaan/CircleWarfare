@@ -659,6 +659,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!114 &1326801355 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11461852, guid: 4722c8ce2fdaf40489048c1ef6cb8e97,
+    type: 2}
+  m_PrefabInternal: {fileID: 1523523841}
+  m_Script: {fileID: 11500000, guid: 745d7bc893f9c48ae8c2df62f23c611a, type: 3}
 --- !u!1 &1374282782
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +698,7 @@ MonoBehaviour:
   nameInputField: {fileID: 785130954}
   ReadyButton: {fileID: 1388837217}
   isReady: 0
+  isConnected: 0
 --- !u!4 &1374282784
 Transform:
   m_ObjectHideFlags: 0
@@ -825,6 +832,48 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1388837215}
+--- !u!1001 &1523523841
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 450872, guid: 4722c8ce2fdaf40489048c1ef6cb8e97, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 265.2558
+      objectReference: {fileID: 0}
+    - target: {fileID: 450872, guid: 4722c8ce2fdaf40489048c1ef6cb8e97, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 161.70421
+      objectReference: {fileID: 0}
+    - target: {fileID: 450872, guid: 4722c8ce2fdaf40489048c1ef6cb8e97, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450872, guid: 4722c8ce2fdaf40489048c1ef6cb8e97, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450872, guid: 4722c8ce2fdaf40489048c1ef6cb8e97, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450872, guid: 4722c8ce2fdaf40489048c1ef6cb8e97, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450872, guid: 4722c8ce2fdaf40489048c1ef6cb8e97, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 450872, guid: 4722c8ce2fdaf40489048c1ef6cb8e97, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 4722c8ce2fdaf40489048c1ef6cb8e97, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1531763861
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,15 +949,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2082961389}
-        m_MethodName: SendMessage
-        m_Mode: 5
+      - m_Target: {fileID: 2082961391}
+        m_MethodName: ConnectLocalNetwork
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Connect
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -1235,6 +1284,9 @@ MonoBehaviour:
   localSocketId: 0
   localPort: 0
   connectionId: 0
+  gameState:
+    teams: 0
+  networkDiscovery: {fileID: 1326801355}
 --- !u!1 &2093487939
 GameObject:
   m_ObjectHideFlags: 0
