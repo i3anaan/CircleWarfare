@@ -40,30 +40,40 @@ public abstract class BaseNetworkManager : MonoBehaviour, INetworkCallback{
 		
 
 	public void Update() {
-		int recHostId; 
-		int connectionId; 
-		int channelId; 
-		byte[] recBuffer = new byte[1024]; 
-		int bufferSize = 1024;
-		int dataSize;
-		byte error;
-		NetworkEventType recData = NetworkTransport.Receive(out recHostId, out connectionId, out channelId, recBuffer, bufferSize, out dataSize, out error);
-		if (((NetworkError)error) != NetworkError.Ok) {
-			RcvError (error, recHostId, connectionId, channelId);
-		} else {
-			switch (recData) {
-			case NetworkEventType.Nothing:
-				RcvNothing(recHostId);
-				break;
-			case NetworkEventType.ConnectEvent:
-				RcvConnect(recHostId, connectionId, channelId);
-				break;
-			case NetworkEventType.DataEvent:
-				RcvData(recHostId, connectionId, channelId, recBuffer, dataSize);
-				break;
-			case NetworkEventType.DisconnectEvent:
-				RcvDisconnect(recHostId, connectionId, channelId);
-				break;
+		bool continueReceiving = true;
+		while (continueReceiving) {
+			//TODO this does not fully work, as it can easily receive a Nothing package from 1 client, while the other has 10 packages queued.
+			//So: improve this (check for each connection if it receives Nothing (or an error))
+			//However, this is an improvement over not doing it at all.
+
+			int recHostId; 
+			int connectionId; 
+			int channelId; 
+			byte[] recBuffer = new byte[1024]; 
+			int bufferSize = 1024;
+			int dataSize;
+			byte error;
+
+			NetworkEventType recData = NetworkTransport.Receive (out recHostId, out connectionId, out channelId, recBuffer, bufferSize, out dataSize, out error);
+			if (((NetworkError)error) != NetworkError.Ok) {
+				RcvError (error, recHostId, connectionId, channelId);
+				continueReceiving = false;
+			} else {
+				switch (recData) {
+				case NetworkEventType.Nothing:
+					RcvNothing (recHostId);
+					continueReceiving = false;
+					break;
+				case NetworkEventType.ConnectEvent:
+					RcvConnect (recHostId, connectionId, channelId);
+					break;
+				case NetworkEventType.DataEvent:
+					RcvData (recHostId, connectionId, channelId, recBuffer, dataSize);
+					break;
+				case NetworkEventType.DisconnectEvent:
+					RcvDisconnect (recHostId, connectionId, channelId);
+					break;
+				}
 			}
 		}
 	}
