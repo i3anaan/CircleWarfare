@@ -31,19 +31,21 @@ public class SetupServerGameController : BaseServerGameController {
 		} else if (ticksTillStart > 0) {
 			ticksTillStart--;
 			startCountdownField.text = "Game starts in: " + (ticksTillStart * Time.fixedDeltaTime);
-		} else {
-			startCountdownField.text = "Ready up to start the game!";
 		}
 	}
 
-	void CheckAllReady() {
+	void CheckReady() {
 		bool allReady = true;
 		foreach (int i in networkManager.connectionIds) {
 			allReady = allReady && networkManager.GetClientData (i).ready;
 		}
 
 		if (allReady) {
-			OnAllReady ();
+			if (networkManager.connectionIds.Count > 1) {
+				OnAllReady ();
+			} else {
+				startCountdownField.text = "This game requires atleast 2 players!";
+			}				
 		} else {
 			OnNotAllReady ();
 		}
@@ -55,6 +57,7 @@ public class SetupServerGameController : BaseServerGameController {
 
 	void OnNotAllReady() {
 		ticksTillStart = -1;
+		startCountdownField.text = "Ready up to start the game!";
 	}
 		
 
@@ -79,12 +82,12 @@ public class SetupServerGameController : BaseServerGameController {
 		case MESSAGE_CLIENT_READY:
 			GetClient (connectionId).ready = true;
 			Debug.Log (GetClient (connectionId) + " is Ready!");
-			CheckAllReady ();
+			CheckReady ();
 			break;
 		case MESSAGE_CLIENT_NOT_READY:
 			GetClient (connectionId).ready = false;
 			Debug.Log (GetClient (connectionId) + " is no longer Ready!");
-			CheckAllReady ();
+			CheckReady ();
 			break;
 		case MESSAGE_CLIENT_NAME:
 			string name = Utils.BytesToString (rcvBuffer, 1, datasize - 1);

@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlanningServerGameController : BaseServerGameController {
 
 	public float planningPhaseDuration;
 	private int planningPhaseTicks;
+	public Text countdownText;
 
 	public const byte MESSAGE_SERVER_GAME_STATE = 5;
 	public const byte MESSAGE_SERVER_PLAYER_ID = 6;
@@ -24,7 +26,7 @@ public class PlanningServerGameController : BaseServerGameController {
 			SendNextPhase ();
 			SceneManager.LoadScene ("S_simulation");
 		}
-
+		countdownText.text = ((int) (planningPhaseDuration - planningPhaseTicks * Time.fixedDeltaTime)) + "";
 		planningPhaseTicks++;
 	}
 

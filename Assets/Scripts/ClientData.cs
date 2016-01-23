@@ -8,6 +8,10 @@ public class ClientData
 
 	public ClientData(int connectionId) {
 		this.playerId = connectionId;
+
+		for (int i = 0; i < priorities.Length; i++) {
+			priorities[i] = 1;
+		}
 	}
 
 	public override string ToString() {

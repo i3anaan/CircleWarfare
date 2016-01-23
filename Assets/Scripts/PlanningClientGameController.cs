@@ -19,7 +19,7 @@ public class PlanningClientGameController : BaseClientGameController {
 
 	private void InitializeUI() {
 		sliders = new List<Slider> ();
-		int sliderCount = networkManager.gameState.teams * 5;
+		int sliderCount = networkManager.gameState.teams;
 		for (int i = 0; i < sliderCount; i++) {
 			Vector3 sliderPos = new Vector3 (-(sliderCount / 2) * 300 + i * 300, 0, 0);
 			Slider slider = (Slider) GameObject.Instantiate (sliderPrefab, sliderPos, Quaternion.identity);
