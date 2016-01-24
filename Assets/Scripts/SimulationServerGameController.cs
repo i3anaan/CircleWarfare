@@ -30,8 +30,11 @@ public class SimulationServerGameController : BaseServerGameController {
 
 	private static GameObject creepStore;
 	private static GameObject debrisStore;
-
-	private int ticksToRestoreTimeScale;
+	private static float TIME_SCALE = 1;
+	private static float TIME_SCALE_PREVIOUS = 1;
+	private float timeScaleSlow;
+	private int timeScaleSlowTicks;
+	private int currentTimeScaleSlowTicks;
 
 	public static Color[] colors = new Color[]{Color.red, Color.blue, Color.green, Color.yellow, Color.cyan, Color.magenta, Color.grey};
 	//TODO move this somewhere else?
@@ -49,11 +52,28 @@ public class SimulationServerGameController : BaseServerGameController {
 		return debrisStore;
 	}
 
+	public static float GetSimulationTimeScale() {
+		return TIME_SCALE;
+	}
+
+	public void Start() {
+		SetSimulationTimeScale (1);
+		StartGame ();
+	}
+
 	public void FixedUpdate() {
-		if (Time.timeScale < 1) {
-			Time.timeScale += (1 - Time.timeScale) / (ticksToRestoreTimeScale + 1);
-		} else {
-			Time.timeScale = 1;
+		//Recover from a slow down effect.
+		if (currentTimeScaleSlowTicks >= 0) {
+			currentTimeScaleSlowTicks++;
+			float perc = ((float) currentTimeScaleSlowTicks) / timeScaleSlowTicks;
+			float percAdj = Mathf.Pow (perc, 5);
+
+			if (currentTimeScaleSlowTicks < timeScaleSlowTicks) {
+				SetSimulationTimeScale (1 - (1 - timeScaleSlow) * (1-percAdj));
+			} else {
+				SetSimulationTimeScale (1);
+				currentTimeScaleSlowTicks = -1;
+			}				
 		}
 	}
 
@@ -67,10 +87,10 @@ public class SimulationServerGameController : BaseServerGameController {
 	}
 
 	public void SpawnCreeps() {
-
-		for (int t = 0; t < networkManager.connectionIds.Count; t++) {
+		//for (int t = 0; t < networkManager.connectionIds.Count; t++) {
+		for (int t = 0; t < 4; t++) {
 			Color color = colors [t];
-			int playerId = networkManager.connectionIds [t];
+			int playerId = t + 1; //networkManager.connectionIds [t];
 			for (int c = 0; c < creepCountPerTeam; c++) {
 				Vector3 pos = new Vector3 (Random.Range (-xRange, xRange), Random.Range (-yRange, yRange), 0);
 				Creep newCreep = (Creep)GameObject.Instantiate (creepPrefab, pos, Quaternion.identity);
@@ -78,6 +98,7 @@ public class SimulationServerGameController : BaseServerGameController {
 				newCreep.transform.SetParent (GetCreepStore().transform);
 				newCreep.gc = this;
 				newCreep.creeps = creeps;
+				newCreep.TimeScale = TIME_SCALE;
 				newCreep.gameObject.GetComponent<SpriteRenderer> ().color = color;
 				newCreep.team = t;
 				newCreep.color = color;
@@ -92,9 +113,30 @@ public class SimulationServerGameController : BaseServerGameController {
 		splasher.Splash ("FIGHT!!", 1, 2);
 	}
 
-	public void SlowPhysics(int seconds) {
-		Time.timeScale = 0.1f;
-		ticksToRestoreTimeScale = (int) (seconds / Time.timeScale);
+	public void SlowSimulation(float slow, float duration) {
+		SetSimulationTimeScale (slow);
+		timeScaleSlow = slow;
+		timeScaleSlowTicks = (int) (duration / Time.fixedDeltaTime);
+		currentTimeScaleSlowTicks = 0;
+	}
+
+	public void SetSimulationTimeScale(float timeScale) {
+		TIME_SCALE_PREVIOUS = TIME_SCALE;
+		TIME_SCALE = timeScale;
+		foreach (Creep c in creeps) {
+			if (c != null) {
+				c.TimeScale = timeScale;
+			}
+		}
+
+		foreach (Rigidbody2D body in GetDebrisStore().transform.GetComponentsInChildren<Rigidbody2D>()) {
+			Vector2 forcePerMass = body.velocity / body.mass;
+			body.mass = Explosion.DEBRIS_BASE_MASS / TIME_SCALE;
+			//float velPerc = body.velocity.magnitude / (Explosion.DEBRIS_FORCE / (Explosion.DEBRIS_BASE_MASS / TIME_SCALE_PREVIOUS));
+			body.AddForce((forcePerMass * (Explosion.DEBRIS_BASE_MASS / TIME_SCALE)) - body.velocity);
+		}
+
+		Debug.Log ("TIME_SCALE: " + TIME_SCALE);
 	}
 
 	public void GameOver() {
@@ -114,12 +156,9 @@ public class SimulationServerGameController : BaseServerGameController {
 		StartGame ();
 	}
 
-
-
-
 	public void FirstBlood() {
 		firstBlood = true;
-		SlowPhysics (5);
+		SlowSimulation (0.1f, 1f);
 		splasher.SplashPrefab (firstBloodSplash);
 	}
 }

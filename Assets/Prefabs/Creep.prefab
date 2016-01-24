@@ -40,8 +40,8 @@ Rigidbody2D:
   m_GameObject: {fileID: 124098}
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
-  m_AngularDrag: 0.05
+  m_LinearDrag: 0
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -73,12 +73,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f660fe3bd954230a5bda43146402b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gc: {fileID: 0}
+  creeps: []
   team: 0
   speed: 0
   damage: 0
   life: 0
   explosionPrefab: {fileID: 11444158, guid: 48f9a724419c64e3e9353b96e1ef9a52, type: 2}
   color: {r: 0, g: 0, b: 0, a: 0}
+  priorities:
+  - 1
+  - 1
+  - 1
+  - 1
 --- !u!212 &21204318
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -134,7 +141,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LinearDrag
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: explosionPrefab
@@ -160,6 +167,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_AngularDrag
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

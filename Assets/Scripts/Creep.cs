@@ -14,6 +14,20 @@ public class Creep : MonoBehaviour {
 	public Color color;
 	public float[] priorities = new float[]{1f, 1f, 1f, 1f};
 
+	private float timeScale;
+	public float TimeScale 
+	{
+		get 
+		{ 
+			return timeScale; 
+		}
+		set 
+		{
+			timeScale = value;
+			AdjustToTimeScale ();
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		ReScale ();
@@ -26,9 +40,9 @@ public class Creep : MonoBehaviour {
 		if (target) {
 			Vector3 dir = (target.transform.position - this.transform.position).normalized;
 			float mass = this.GetComponent<Rigidbody2D> ().mass;
-			this.GetComponents<Rigidbody2D> () [0].AddForce (dir * speed * mass);
+			this.GetComponents<Rigidbody2D> () [0].AddForce (dir * speed);
 
-			if (Vector2.Distance (this.transform.position, target.transform.position) < (this.transform.localScale.x + target.transform.localScale.x) * 0.51f) {
+			if (Vector2.Distance (this.transform.position, target.transform.position) < (this.transform.localScale.x + target.transform.localScale.x) * 0.55f) {
 				//Fighting the target;
 				this.Attack (target);
 			}
@@ -54,13 +68,13 @@ public class Creep : MonoBehaviour {
 	}
 
 	void Attack(Creep target) {
-		target.TakeDamage(this.damage);
+		target.TakeDamage(this.damage * timeScale);
 	}
 
 	void ReScale() {
 		float scale = Mathf.Max(this.life / SimulationServerGameController.CREEP_BASE_LIFE, 0.15f);
 		this.transform.localScale = new Vector3 (scale, scale, scale);
-		this.GetComponent<Rigidbody2D> ().mass = 0.5f + scale / 2f;
+		this.GetComponent<Rigidbody2D> ().mass = (0.5f + scale / 2f) / timeScale;
 	}
 
 	Creep FindTarget() {
@@ -81,5 +95,9 @@ public class Creep : MonoBehaviour {
 			gc.GameOver();
 		}
 		return target;
+	}
+
+	private void AdjustToTimeScale () {
+		ReScale ();
 	}
 }

@@ -31,9 +31,10 @@ public class ServerNetworkManager : SimpleServerNetworkManager {
 	}
 
 	public ClientData GetClientData(int playerId) {
-		ClientData client = new ClientData(-1);
+		ClientData client;
 		if (!clients.TryGetValue (playerId, out client)) {
-			Debug.LogError ("Can not find a ClientData for playerId: " + playerId);
+			Debug.LogWarning ("Can not find a ClientData for playerId: " + playerId);
+			client = new ClientData(-1);
 		}
 		return client;
 	}
