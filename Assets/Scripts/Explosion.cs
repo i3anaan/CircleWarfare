@@ -20,7 +20,9 @@ public class Explosion : MonoBehaviour {
 			GameObject debris = (GameObject) GameObject.Instantiate (debrisPrefab, this.transform.position, rotation);
 			debris.transform.SetParent (SimulationServerGameController.GetDebrisStore ().transform);
 			debris.GetComponent<Rigidbody2D> ().mass = DEBRIS_BASE_MASS / timeScale;
+			//Slower time results in higher mass.
 			debris.GetComponent<Rigidbody2D>().AddForce(debris.transform.up * DEBRIS_FORCE);
+			//Force is independent of timeScale, thus slower time results in slower debris.
 		}
 	}
 }

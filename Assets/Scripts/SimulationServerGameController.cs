@@ -110,7 +110,7 @@ public class SimulationServerGameController : BaseServerGameController {
 				creeps.Add (newCreep);
 			}
 		}
-		splasher.Splash ("FIGHT!!", 1, 2);
+		//splasher.Splash ("FIGHT!!", 1, 2);
 	}
 
 	public void SlowSimulation(float slow, float duration) {
@@ -130,10 +130,24 @@ public class SimulationServerGameController : BaseServerGameController {
 		}
 
 		foreach (Rigidbody2D body in GetDebrisStore().transform.GetComponentsInChildren<Rigidbody2D>()) {
-			Vector2 forcePerMass = body.velocity / body.mass;
-			body.mass = Explosion.DEBRIS_BASE_MASS / TIME_SCALE;
+			float oldMass = Explosion.DEBRIS_BASE_MASS / TIME_SCALE_PREVIOUS;
+			float newMass = Explosion.DEBRIS_BASE_MASS / TIME_SCALE;
+			float oldMaxVel = Explosion.DEBRIS_FORCE / oldMass;
+			float newMaxVel = Explosion.DEBRIS_FORCE / newMass;
+
+			float velocityPercentage = body.velocity.magnitude / oldMaxVel;
+			float newRealVel = newMaxVel * velocityPercentage;
+			Vector2 newForce = newRealVel * body.velocity.normalized * newMass * 1.1f;
+			body.velocity = newRealVel * body.velocity.normalized;
+			//body.AddForce (newForce - body.velocity * oldMass);
+
 			//float velPerc = body.velocity.magnitude / (Explosion.DEBRIS_FORCE / (Explosion.DEBRIS_BASE_MASS / TIME_SCALE_PREVIOUS));
-			body.AddForce((forcePerMass * (Explosion.DEBRIS_BASE_MASS / TIME_SCALE)) - body.velocity);
+			//Debug.Log(totalForce);
+
+
+
+			//UGLY fix:
+			//body.AddForce(totalForce);
 		}
 
 		Debug.Log ("TIME_SCALE: " + TIME_SCALE);
@@ -158,7 +172,7 @@ public class SimulationServerGameController : BaseServerGameController {
 
 	public void FirstBlood() {
 		firstBlood = true;
-		SlowSimulation (0.1f, 1f);
+		SlowSimulation (0.1f, 3f);
 		splasher.SplashPrefab (firstBloodSplash);
 	}
 }
