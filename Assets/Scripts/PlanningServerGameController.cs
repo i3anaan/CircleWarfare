@@ -18,6 +18,11 @@ public class PlanningServerGameController : BaseServerGameController {
 
 	new void Awake() {
 		base.Awake ();
+
+		for (int i = 0; i < networkManager.gameState.teams; i++) {
+			networkManager.gameState.names [i] = GetClient (i + 1).name;
+		}
+
 		SendClientData ();
 		SendGameState ();
 		SendPlayerIds ();

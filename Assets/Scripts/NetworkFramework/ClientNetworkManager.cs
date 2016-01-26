@@ -13,6 +13,7 @@ public class ClientNetworkManager : SimpleClientNetworkManager {
 	public GameState gameState;
 	public ClientData clientData;
 	public CustomNetworkDiscovery networkDiscovery;
+	public Text ipInputField;
 
 	void Start() {
 		clientData = new ClientData ();
@@ -27,6 +28,10 @@ public class ClientNetworkManager : SimpleClientNetworkManager {
 		if (networkDiscovery != null) {
 			networkDiscovery.StartAsClient ();
 		}
+	}
+
+	public void ConnectSpecificIP() {
+		Connect (ipInputField.text);
 	}
 
 	public void Connect(string address) {

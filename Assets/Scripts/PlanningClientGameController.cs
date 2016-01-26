@@ -35,7 +35,7 @@ public class PlanningClientGameController : BaseClientGameController {
 			slider.transform.GetChild (0).gameObject.GetComponent<Image> ().color = SimulationServerGameController.colors [i];
 			//Set slider bottom-part color
 			slider.transform.GetChild (1).GetChild(0).gameObject.GetComponent<Image> ().color = SimulationServerGameController.colors [i];
-
+			slider.GetComponentInChildren<Text> ().text = networkManager.gameState.names [i];
 			if (i == playerId - 1) {
 				slider.interactable = false;
 			}

@@ -252,22 +252,6 @@ Prefab:
       propertyPath: splasher
       value: 
       objectReference: {fileID: 459977212}
-    - target: {fileID: 11492738, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
-      propertyPath: firstBloodSplash
-      value: 
-      objectReference: {fileID: 170714, guid: ca2230990790d4d0d8a42d870b069c75, type: 2}
-    - target: {fileID: 11492738, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
-      propertyPath: speedRandomness
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11492738, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
-      propertyPath: damageRandomness
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11492738, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
-      propertyPath: lifeRandomness
-      value: 0.2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a271ddf6ae2bc4f4e94abb501ec6421e, type: 2}
   m_IsPrefabParent: 0

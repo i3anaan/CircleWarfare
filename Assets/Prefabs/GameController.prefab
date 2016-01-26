@@ -40,15 +40,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkManager: {fileID: 0}
-  speedRandomness: 0.8
-  damageRandomness: 0.8
-  lifeRandomness: 0.8
+  speedRandomness: 0.2
+  damageRandomness: 0.2
+  lifeRandomness: 0.2
   creepPrefab: {fileID: 11440806, guid: 5f0165179837948c9a6760aab9bd7391, type: 2}
   teamCount: 4
-  creepCountPerTeam: 10
+  creepCountPerTeam: 8
   creeps: []
   xRange: 8.388889
   yRange: 4.5
+  gameOver: 0
+  firstBlood: 0
+  splasher: {fileID: 0}
+  firstBloodSplash: {fileID: 170714, guid: ca2230990790d4d0d8a42d870b069c75, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -164,8 +164,8 @@ public class SimulationServerGameController : BaseServerGameController {
 	}
 
 	public void TeamLost(int team) {
-		GetClient (team + 1).handicapPoints += teamsStillAlive;
 		teamsStillAlive--;
+		GetClient (team + 1).handicapPoints += teamsStillAlive;
 	}
 
 	private void SendGameOverData(int winnerId) {
