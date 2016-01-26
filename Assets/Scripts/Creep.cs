@@ -6,7 +6,7 @@ public class Creep : MonoBehaviour {
 
 	public SimulationServerGameController gc;
 	public List<Creep> creeps;
-	public int team;
+	public int team; // = playerId - 1.
 	public float speed;
 	public float damage;
 	public float life;
@@ -65,6 +65,18 @@ public class Creep : MonoBehaviour {
 		if (!gc.firstBlood) {
 			gc.FirstBlood ();
 		}
+
+		bool lastFromTeam = true;
+		foreach (Creep c in creeps) {
+			if (c!=null && c != this && c.team == this.team) {
+				lastFromTeam = false;
+				break;
+			}
+		}
+		if (lastFromTeam) {
+			gc.TeamLost(this.team);
+		}
+
 		GameObject.Destroy (this.gameObject);
 	}
 
@@ -93,7 +105,7 @@ public class Creep : MonoBehaviour {
 		}
 
 		if (!target) {
-			gc.GameOver();
+			gc.GameOver(this.team);
 		}
 		return target;
 	}

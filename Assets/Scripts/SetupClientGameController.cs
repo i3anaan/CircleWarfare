@@ -38,7 +38,6 @@ public class SetupClientGameController : BaseClientGameController {
 		string name = nameInputField.text;
 		byte[] nameBytes = Utils.StringToBytes (name);
 		byte[] bytes = Utils.ConcatBytes (commandByte, nameBytes);
-
 		networkManager.SendData(bytes); 
 	}
 

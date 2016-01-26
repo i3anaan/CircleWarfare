@@ -11,9 +11,12 @@ public class ClientNetworkManager : SimpleClientNetworkManager {
 	//Create a custom GameState class for your game.
 	//GameState needs the [Serializable] Attribute, so that it can be synchronized with the clients.
 	public GameState gameState;
+	public ClientData clientData;
 	public CustomNetworkDiscovery networkDiscovery;
 
 	void Start() {
+		clientData = new ClientData ();
+		gameState = new GameState ();
 		OnLevelWasLoaded (-1);
 		if (autoConnect) {
 			ConnectLocalNetwork ();

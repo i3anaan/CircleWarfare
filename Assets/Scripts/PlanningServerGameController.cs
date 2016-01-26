@@ -7,18 +7,20 @@ public class PlanningServerGameController : BaseServerGameController {
 
 	public float planningPhaseDuration;
 	private int planningPhaseTicks;
-	public Text countdownText;
+	private int previousPhaseCountDown = -1;
+	public TextSplasher splasher;
 
 	public const byte MESSAGE_SERVER_GAME_STATE = 5;
 	public const byte MESSAGE_SERVER_PLAYER_ID = 6;
 	public const byte MESSAGE_SERVER_NEXT_PHASE_SIMULATION = 8;
+	public const byte MESSAGE_SERVER_CLIENT_DATA = 11;
 	public const byte MESSAGE_CLIENT_GAME_PRIORITY = 7;
 
 	new void Awake() {
 		base.Awake ();
+		SendClientData ();
 		SendGameState ();
 		SendPlayerIds ();
-
 	}
 
 	void FixedUpdate() {
@@ -26,8 +28,12 @@ public class PlanningServerGameController : BaseServerGameController {
 			SendNextPhase ();
 			SceneManager.LoadScene ("S_simulation");
 		}
-		countdownText.text = ((int) (planningPhaseDuration - planningPhaseTicks * Time.fixedDeltaTime)) + "";
+		int countdown = ((int) (planningPhaseDuration - planningPhaseTicks * Time.fixedDeltaTime + 1f));
 		planningPhaseTicks++;
+		if (previousPhaseCountDown != countdown) {
+			splasher.Splash (countdown + "", 1, 1, Color.red);
+			previousPhaseCountDown = countdown;
+		}
 	}
 
 	void SendGameState() {
@@ -39,6 +45,14 @@ public class PlanningServerGameController : BaseServerGameController {
 	void SendNextPhase() {
 		byte commandByte = MESSAGE_SERVER_NEXT_PHASE_SIMULATION;
 		networkManager.SendDataAll (commandByte);
+	}
+
+	void SendClientData() {
+		byte commandByte = MESSAGE_SERVER_CLIENT_DATA;
+		foreach (int connId in networkManager.connectionIds) {
+			byte[] clientDataBytes = Utils.ObjectToBytes (networkManager.GetClientData(connId));
+			networkManager.SendData(connId, Utils.ConcatBytes(commandByte, clientDataBytes));
+		}
 	}
 
 	void SendPlayerIds() {

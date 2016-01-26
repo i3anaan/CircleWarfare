@@ -13,6 +13,7 @@ public class TextSplasher : MonoBehaviour {
 	{
 		public string text;
 		public float duration;
+		public Color color;
 		public GameObject obj;
 	}
 
@@ -25,21 +26,29 @@ public class TextSplasher : MonoBehaviour {
 			SplashCommand cmd = queue [0];
 			queue.RemoveAt (0);
 			if (cmd.obj == null) {
-				Splash (cmd.text, cmd.duration);
+				Splash (cmd.text, cmd.duration, cmd.color);
 			} else {
 				Splash (cmd.obj);
 			}
 		}
 	}
 
+
+
 	public void Splash (string text, float duration, int amount) {
+		Splash (text, duration, amount, Color.black);
+	}
+
+	public void Splash (string text, float duration, int amount, Color color) {
 		SplashCommand cmd = new SplashCommand();
 		cmd.text = text;
 		cmd.duration = duration;
+		cmd.color = color;
 
 		for (int i = 0; i < amount; i++) {
 			queue.Add(cmd);
 		}
+
 	}
 
 	public void SplashPrefab(GameObject splash) {
@@ -50,10 +59,11 @@ public class TextSplasher : MonoBehaviour {
 	}
 		
 
-	private void Splash(string text, float duration) {
+	private void Splash(string text, float duration, Color color) {
 		splash = Instantiate (splashPrefab);
 		splash.transform.SetParent (canvas.transform, false);
 		splash.transform.GetChild (0).GetComponent<Text> ().text = text;
+		splash.transform.GetChild (0).GetComponent<Text> ().color = color;
 		splash.GetComponent<DropExit> ().dropDelay = duration;
 	}
 

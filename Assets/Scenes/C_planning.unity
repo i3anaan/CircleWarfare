@@ -171,6 +171,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!1001 &607276660
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 447528, guid: c98ca754e624f4d7fb72f9167ca25b0f, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c98ca754e624f4d7fb72f9167ca25b0f, type: 2}
+  m_IsPrefabParent: 0
+--- !u!212 &607276661 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 21205496, guid: c98ca754e624f4d7fb72f9167ca25b0f,
+    type: 2}
+  m_PrefabInternal: {fileID: 607276660}
 --- !u!1 &686029660
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +221,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -55}
+  m_AnchoredPosition: {x: 457.6, y: -110.1}
   m_SizeDelta: {x: 800, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &686029662
@@ -275,6 +294,7 @@ MonoBehaviour:
   sliderPrefab: {fileID: 11430562, guid: de6b45fc0c9f6427db06158b4f86b4d6, type: 2}
   canvas: {fileID: 1968463867}
   playerId: 0
+  background: {fileID: 607276661}
 --- !u!4 &1541802849
 Transform:
   m_ObjectHideFlags: 0
@@ -286,7 +306,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &1932387181
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +367,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &1968463864
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +453,7 @@ RectTransform:
   m_Children:
   - {fileID: 686029661}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}

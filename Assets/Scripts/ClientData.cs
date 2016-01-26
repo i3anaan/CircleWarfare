@@ -1,10 +1,16 @@
 ﻿using System;
+[Serializable]
 public class ClientData
 {
 	public int playerId = -1;
 	public bool ready = true;
 	public string name = "not_set";
 	public float[] priorities = new float[16];
+	public int wins = 0;
+	public int handicapPoints = 0;
+
+	public ClientData() : this(-1) {
+	}
 
 	public ClientData(int connectionId) {
 		this.playerId = connectionId;

@@ -16,8 +16,10 @@ public class PlanningClientGameController : BaseClientGameController {
 
 	private GameState gameState;
 	public int playerId;
+	public SpriteRenderer background;
 
 	private void InitializeUI() {
+		background.color = Color.Lerp(SimulationServerGameController.colors [playerId - 1], Color.white, 0.5f);
 		sliders = new List<Slider> ();
 		int sliderCount = networkManager.gameState.teams;
 		for (int i = 0; i < sliderCount; i++) {
@@ -27,6 +29,7 @@ public class PlanningClientGameController : BaseClientGameController {
 			slider.onValueChanged.AddListener (delegate {SliderChanged ();});
 			slider.transform.SetParent (canvas.transform, false);
 			slider.transform.localScale = new Vector3 (1, 1, 1);
+			slider.value = networkManager.clientData.priorities [i];
 
 			//Set slider top-part color
 			slider.transform.GetChild (0).gameObject.GetComponent<Image> ().color = SimulationServerGameController.colors [i];
@@ -73,10 +76,15 @@ public class PlanningClientGameController : BaseClientGameController {
 			byte[] bytes = Utils.SubArray (rcvBuffer, 1, datasize);
 			GameState gs = (GameState) Utils.BytesToObject (bytes);
 			networkManager.gameState = gs;
-			//Debug.Log ("Received GameState: " + gs);
+			break;
+		case PlanningServerGameController.MESSAGE_SERVER_CLIENT_DATA:
+			byte[] bytes2 = Utils.SubArray (rcvBuffer, 1, datasize);
+			ClientData cd = (ClientData) Utils.BytesToObject (bytes2);
+			networkManager.clientData = cd;
 			break;
 		case PlanningServerGameController.MESSAGE_SERVER_PLAYER_ID:
 			this.playerId = (int)rcvBuffer [1];
+			networkManager.clientData.playerId = playerId;
 			Debug.Log ("Received player id: " + playerId);
 			InitializeUI ();
 			break;
