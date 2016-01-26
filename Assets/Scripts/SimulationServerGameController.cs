@@ -87,10 +87,10 @@ public class SimulationServerGameController : BaseServerGameController {
 	}
 
 	public void SpawnCreeps() {
-		//for (int t = 0; t < networkManager.connectionIds.Count; t++) {
-		for (int t = 0; t < 4; t++) {
+		for (int t = 0; t < networkManager.connectionIds.Count; t++) {
+		//for (int t = 0; t < 4; t++) {
 			Color color = colors [t];
-			int playerId = t + 1; //networkManager.connectionIds [t];
+			int playerId = networkManager.connectionIds [t];
 			for (int c = 0; c < creepCountPerTeam; c++) {
 				Vector3 pos = new Vector3 (Random.Range (-xRange, xRange), Random.Range (-yRange, yRange), 0);
 				Creep newCreep = (Creep)GameObject.Instantiate (creepPrefab, pos, Quaternion.identity);
@@ -110,7 +110,6 @@ public class SimulationServerGameController : BaseServerGameController {
 				creeps.Add (newCreep);
 			}
 		}
-		//splasher.Splash ("FIGHT!!", 1, 2);
 	}
 
 	public void SlowSimulation(float slow, float duration) {
@@ -130,41 +129,24 @@ public class SimulationServerGameController : BaseServerGameController {
 		}
 
 		foreach (Rigidbody2D body in GetDebrisStore().transform.GetComponentsInChildren<Rigidbody2D>()) {
-			float oldMass = Explosion.DEBRIS_BASE_MASS / TIME_SCALE_PREVIOUS;
-			float newMass = Explosion.DEBRIS_BASE_MASS / TIME_SCALE;
-			float oldMaxVel = Explosion.DEBRIS_FORCE / oldMass;
-			float newMaxVel = Explosion.DEBRIS_FORCE / newMass;
-
-			float velocityPercentage = body.velocity.magnitude / oldMaxVel;
-			float newRealVel = newMaxVel * velocityPercentage;
-			Vector2 newForce = newRealVel * body.velocity.normalized * newMass * 1.1f;
-			body.velocity = newRealVel * body.velocity.normalized;
-			//body.AddForce (newForce - body.velocity * oldMass);
-
-			//float velPerc = body.velocity.magnitude / (Explosion.DEBRIS_FORCE / (Explosion.DEBRIS_BASE_MASS / TIME_SCALE_PREVIOUS));
-			//Debug.Log(totalForce);
-
-
-
-			//UGLY fix:
-			//body.AddForce(totalForce);
+			//body.mass = Explosion.DEBRIS_BASE_MASS / TIME_SCALE;
+			//While i believe setting the mass according the time scale would be correct, not doing so looks better :)
+			Vector2 newRealVel = body.velocity * (TIME_SCALE / TIME_SCALE_PREVIOUS);
+			body.velocity = newRealVel;
 		}
-
-		Debug.Log ("TIME_SCALE: " + TIME_SCALE);
 	}
 
 	public void GameOver() {
 		if (!gameOver) {
 			gameOver = true;
-			splasher.Splash ("GAME OVER", 10, 1);
-			Invoke ("NextScene", 9);
+			splasher.Splash ("GAME OVER", 5, 1);
+			Invoke ("NextScene", 4);
 		}
 	}
 
 	private void NextScene() {
 		SceneManager.LoadScene ("S_simulation");
 	}
-		
 
 	public override void RcvData(int rcvHostId, int connectionId, int channelId, byte[] rcvBuffer, int datasize) {
 		StartGame ();
